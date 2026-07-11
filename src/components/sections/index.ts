@@ -1,0 +1,10 @@
+export { Hero } from "./hero";
+export { Services } from "./services";
+export { Portfolio } from "./portfolio";
+export { Technologies } from "./technologies";
+export { WhyChoose } from "./why-choose";
+export { Process } from "./process";
+export { Testimonials } from "./testimonials";
+export { Faq } from "./faq";
+export { Contact } from "./contact";
+export { AnimatedBackground } from "./animated-background";

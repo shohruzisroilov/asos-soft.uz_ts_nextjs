@@ -1,0 +1,80 @@
+"use client";
+
+import { m, type Variants } from "framer-motion";
+import { Container, Badge } from "@/components/ui";
+import { Reveal } from "@/components/shared";
+import { technologies } from "@/data/technologies";
+import { viewportOnce } from "@/lib/motion";
+
+const gridContainer: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.04 } },
+};
+
+const tileVariant: Variants = {
+  hidden: { opacity: 0, y: 16, scale: 0.94 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+export function Technologies() {
+  return (
+    <section
+      id="technologies"
+      aria-labelledby="technologies-heading"
+      className="relative scroll-mt-24 py-24 sm:py-32"
+    >
+      <Container>
+        {/* Header */}
+        <div className="mx-auto max-w-2xl text-center">
+          <Reveal>
+            <Badge variant="subtle" dot>
+              Our stack
+            </Badge>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <h2
+              id="technologies-heading"
+              className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
+            >
+              Technologies we build with
+            </h2>
+          </Reveal>
+          <Reveal delay={0.16}>
+            <p className="mt-4 text-balance text-lg text-foreground-muted">
+              A modern, battle-tested toolkit — chosen for performance,
+              reliability, and long-term maintainability.
+            </p>
+          </Reveal>
+        </div>
+
+        {/* Logo grid */}
+        <m.ul
+          variants={gridContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          className="mx-auto mt-16 grid max-w-5xl grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 sm:gap-4"
+        >
+          {technologies.map(({ name, Icon }) => (
+            <m.li key={name} variants={tileVariant}>
+              <div className="group flex h-full flex-col items-center justify-center gap-3 rounded-2xl border border-border bg-surface px-4 py-7 transition-all duration-300 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-foreground/20 hover:shadow-md">
+                <Icon
+                  className="size-9 text-foreground-muted transition-all duration-300 ease-[var(--ease-out-expo)] group-hover:scale-110 group-hover:text-foreground"
+                  aria-hidden
+                />
+                <span className="text-center text-xs font-medium text-foreground-muted transition-colors duration-300 group-hover:text-foreground">
+                  {name}
+                </span>
+              </div>
+            </m.li>
+          ))}
+        </m.ul>
+      </Container>
+    </section>
+  );
+}

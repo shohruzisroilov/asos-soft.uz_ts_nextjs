@@ -1,0 +1,142 @@
+"use client";
+
+import Link from "next/link";
+import { m, useReducedMotion } from "framer-motion";
+import { ArrowRight, Sparkles } from "lucide-react";
+import { Container, Badge, buttonVariants } from "@/components/ui";
+import { CountUp } from "@/components/shared/count-up";
+import { Parallax } from "@/components/shared/parallax";
+import { AnimatedBackground } from "./animated-background";
+import { heroStats, floatingIcons } from "@/data/hero";
+import { cn } from "@/lib/utils";
+
+const HEADLINE = "Building Digital Solutions That Grow Your Business";
+
+/**
+ * The hero's primary content uses CSS entrance animations (not JS) so the
+ * LCP heading paints on first paint and is never gated behind hydration.
+ * The global prefers-reduced-motion rule disables these automatically.
+ * Only the decorative floating icons + parallax are JS-driven.
+ */
+export function Hero() {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <section
+      aria-labelledby="hero-heading"
+      className="relative isolate overflow-hidden"
+    >
+      <AnimatedBackground />
+
+      {/* Floating technology icons (decorative) — scroll parallax */}
+      <Parallax
+        speed={0.4}
+        className="pointer-events-none absolute inset-0 -z-[5] hidden lg:block"
+      >
+        <div aria-hidden className="relative size-full">
+          {floatingIcons.map(({ icon: IconEl, label, className, delay, duration }) => (
+            <m.div
+              key={label}
+              className={cn("absolute", className)}
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <m.div
+                className="glass flex size-14 items-center justify-center rounded-2xl text-foreground shadow-md"
+                title={label}
+                animate={reduceMotion ? undefined : { y: [0, -14, 0] }}
+                transition={{
+                  duration,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay,
+                }}
+              >
+                <IconEl className="size-6" strokeWidth={1.75} />
+              </m.div>
+            </m.div>
+          ))}
+        </div>
+      </Parallax>
+
+      <Container className="relative flex min-h-[92vh] flex-col items-center justify-center py-28 text-center">
+        <div className="flex flex-col items-center">
+          {/* Eyebrow */}
+          <div className="animate-fade-in-up" style={{ animationDelay: "0.05s" }}>
+            <Badge variant="glass" size="lg" className="shadow-sm">
+              <Sparkles className="size-3.5" />
+              Digital product studio for ambitious teams
+            </Badge>
+          </div>
+
+          {/* Headline — single semantic <h1>, painted immediately for LCP */}
+          <h1
+            id="hero-heading"
+            className="mt-7 max-w-4xl animate-fade-in-up text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-gradient sm:text-6xl lg:text-7xl"
+            style={{ animationDelay: "0.12s" }}
+          >
+            {HEADLINE}
+          </h1>
+
+          {/* Subheadline */}
+          <p
+            className="mt-6 max-w-2xl animate-fade-in-up text-balance text-lg leading-relaxed text-foreground-muted"
+            style={{ animationDelay: "0.2s" }}
+          >
+            AsosSoft designs and develops{" "}
+            <span className="text-foreground">
+              websites, mobile apps, CRM systems, AI solutions, ERP, automation,
+              UI/UX, branding
+            </span>{" "}
+            and custom software — end-to-end products engineered to help your
+            business scale.
+          </p>
+
+          {/* CTAs */}
+          <div
+            className="mt-10 flex w-full animate-fade-in-up flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row"
+            style={{ animationDelay: "0.28s" }}
+          >
+            <Link
+              href="/contact"
+              className={cn(buttonVariants({ size: "lg" }), "group w-full sm:w-auto")}
+            >
+              Get Free Consultation
+              <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+            </Link>
+            <Link
+              href="/portfolio"
+              className={cn(
+                buttonVariants({ variant: "outline", size: "lg" }),
+                "w-full sm:w-auto"
+              )}
+            >
+              View Portfolio
+            </Link>
+          </div>
+
+          {/* Statistics cards */}
+          <dl
+            className="mt-16 grid w-full max-w-3xl animate-fade-in-up grid-cols-2 gap-4 sm:grid-cols-4"
+            style={{ animationDelay: "0.36s" }}
+          >
+            {heroStats.map((stat) => (
+              <div
+                key={stat.label}
+                className="rounded-2xl border border-border bg-surface/60 p-5 backdrop-blur-sm transition-colors duration-300 hover:border-foreground/20"
+              >
+                <dd className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                  <CountUp value={stat.value} suffix={stat.suffix} />
+                </dd>
+                <dt className="mt-1.5 text-xs text-foreground-muted sm:text-sm">
+                  {stat.label}
+                </dt>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </Container>
+    </section>
+  );
+}
