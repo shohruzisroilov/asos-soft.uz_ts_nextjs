@@ -52,13 +52,15 @@ export function Hero() {
                   delay,
                 }}
               >
-                <img
-                  src={src}
-                  alt={alt}
-                  className="size-14 drop-shadow-md"
-                  loading="lazy"
-                  draggable={false}
-                />
+                <div className="group/icon flex size-24 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-[2px] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] transition-all duration-300 hover:scale-110 hover:border-white/20 hover:bg-white/[0.06] hover:shadow-[0_8px_30px_rgb(0,0,0,0.5)]">
+                  <img
+                    src={src}
+                    alt={alt}
+                    className="size-full object-contain transition-transform duration-300 group-hover/icon:scale-105"
+                    loading="lazy"
+                    draggable={false}
+                  />
+                </div>
               </m.div>
             </m.div>
           ))}
