@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import { MotionProvider } from "@/providers/motion-provider";
 import { I18nProvider } from "@/providers/i18n-provider";
 import { JsonLd } from "@/components/seo/json-ld";
+import { GoogleAnalytics } from "@/components/seo/google-analytics";
 import { organizationSchema, webSiteSchema, localBusinessSchema } from "@/lib/schema";
 import { siteConfig } from "@/config/site";
 import {
@@ -150,6 +151,9 @@ export default async function LocaleLayout({
         <JsonLd data={organizationSchema()} />
         <JsonLd data={localBusinessSchema()} />
         <JsonLd data={webSiteSchema(locale)} />
+
+        {/* Google Analytics (gtag.js) */}
+        <GoogleAnalytics />
       </body>
     </html>
   );
