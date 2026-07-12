@@ -5,7 +5,8 @@ import { AnimatePresence, m, type Variants } from "framer-motion";
 import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 import { Container, Badge } from "@/components/ui";
 import { Reveal, Avatar } from "@/components/shared";
-import { testimonials, type Testimonial } from "@/data/testimonials";
+import { testimonials, type TestimonialMeta } from "@/data/testimonials";
+import { useI18n } from "@/providers/i18n-provider";
 import { cn } from "@/lib/utils";
 
 const AUTOPLAY_MS = 6000;
@@ -34,7 +35,13 @@ function Rating({ rating }: { rating: number }) {
   );
 }
 
-function TestimonialCard({ item }: { item: Testimonial }) {
+function TestimonialCard({
+  item,
+  review,
+}: {
+  item: TestimonialMeta;
+  review: string;
+}) {
   return (
     <figure className="relative mx-auto flex min-h-[19rem] max-w-2xl flex-col rounded-3xl border border-border bg-surface p-8 shadow-sm sm:min-h-[16rem] sm:p-10">
       <Quote
@@ -44,7 +51,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
       <Rating rating={item.rating} />
       <blockquote className="mt-5 flex-1">
         <p className="text-balance text-lg leading-relaxed text-foreground sm:text-xl">
-          &ldquo;{item.review}&rdquo;
+          &ldquo;{review}&rdquo;
         </p>
       </blockquote>
       <figcaption className="mt-8 flex items-center gap-4">
@@ -52,9 +59,6 @@ function TestimonialCard({ item }: { item: Testimonial }) {
         <div>
           <div className="font-semibold tracking-tight text-foreground">
             {item.name}
-          </div>
-          <div className="text-sm text-foreground-muted">
-            {item.role}, {item.company}
           </div>
         </div>
       </figcaption>
@@ -69,6 +73,7 @@ const slideVariants: Variants = {
 };
 
 export function Testimonials() {
+  const { t } = useI18n();
   const count = testimonials.length;
   const [[index, direction], setState] = useState<[number, number]>([0, 0]);
   const [paused, setPaused] = useState(false);
@@ -92,16 +97,15 @@ export function Testimonials() {
 
   return (
     <section
-      id="testimonials"
       aria-labelledby="testimonials-heading"
-      className="relative scroll-mt-24 border-t border-border bg-background-subtle py-24 sm:py-32"
+      className="relative scroll-mt-8 border-t border-border bg-background-subtle py-24 sm:py-32"
     >
       <Container>
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
           <Reveal>
             <Badge variant="subtle" dot>
-              Testimonials
+              {t.testimonials.badge}
             </Badge>
           </Reveal>
           <Reveal delay={0.08}>
@@ -109,13 +113,12 @@ export function Testimonials() {
               id="testimonials-heading"
               className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
             >
-              Loved by teams we&rsquo;ve built with
+              {t.testimonials.heading}
             </h2>
           </Reveal>
           <Reveal delay={0.16}>
             <p className="mt-4 text-balance text-lg text-foreground-muted">
-              Don&rsquo;t just take our word for it — here&rsquo;s what our
-              clients say.
+              {t.testimonials.subheading}
             </p>
           </Reveal>
         </div>
@@ -141,7 +144,10 @@ export function Testimonials() {
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   aria-live="polite"
                 >
-                  <TestimonialCard item={current} />
+                  <TestimonialCard
+                    item={current}
+                    review={t.testimonials.items[index].review}
+                  />
                 </m.div>
               </AnimatePresence>
             </div>
@@ -159,9 +165,9 @@ export function Testimonials() {
 
               {/* Dots */}
               <div className="flex items-center gap-2">
-                {testimonials.map((t, i) => (
+                {testimonials.map((item, i) => (
                   <button
-                    key={t.name}
+                    key={item.name}
                     type="button"
                     onClick={() => goTo(i)}
                     aria-label={`Go to testimonial ${i + 1}`}

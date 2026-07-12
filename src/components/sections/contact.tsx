@@ -13,8 +13,8 @@ import {
   Textarea,
 } from "@/components/ui";
 import { Reveal } from "@/components/shared";
-import { serviceOptions, budgetOptions } from "@/data/contact";
 import { siteConfig } from "@/config/site";
+import { useI18n } from "@/providers/i18n-provider";
 import {
   emptyContactForm,
   validateContactForm,
@@ -23,13 +23,9 @@ import {
   type ContactErrors,
 } from "@/lib/contact";
 
-const contactDetails = [
-  { icon: Mail, label: "Email", value: siteConfig.contact.email, href: `mailto:${siteConfig.contact.email}` },
-  { icon: Phone, label: "Phone", value: siteConfig.contact.phone, href: `tel:${siteConfig.contact.phone.replace(/\s/g, "")}` },
-  { icon: MapPin, label: "Location", value: siteConfig.contact.address, href: undefined },
-];
-
 function SuccessToast({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { t } = useI18n();
+
   useEffect(() => {
     if (!open) return;
     const id = setTimeout(onClose, 5000);
@@ -53,10 +49,10 @@ function SuccessToast({ open, onClose }: { open: boolean; onClose: () => void })
           </span>
           <div className="flex-1">
             <p className="text-sm font-semibold text-foreground">
-              Message sent successfully
+              {t.contact.success.title}
             </p>
             <p className="mt-0.5 text-sm text-foreground-muted">
-              Thanks for reaching out — we&rsquo;ll reply within 24 hours.
+              {t.contact.success.body}
             </p>
           </div>
           <button
@@ -74,10 +70,38 @@ function SuccessToast({ open, onClose }: { open: boolean; onClose: () => void })
 }
 
 export function Contact() {
+  const { t } = useI18n();
   const [values, setValues] = useState<ContactFormValues>(emptyContactForm);
   const [errors, setErrors] = useState<ContactErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
+
+  const contactDetails = [
+    {
+      icon: Mail,
+      label: t.contact.details.email,
+      value: siteConfig.contact.email,
+      href: `mailto:${siteConfig.contact.email}`,
+    },
+    {
+      icon: Phone,
+      label: t.contact.details.phone,
+      value: siteConfig.contact.phone,
+      href: `tel:${siteConfig.contact.phone.replace(/\s/g, "")}`,
+    },
+    {
+      icon: MapPin,
+      label: t.contact.details.location,
+      value: siteConfig.contact.address,
+      href: undefined,
+    },
+  ];
+
+  // Options are derived from the translated services.
+  const serviceOptions = [
+    ...t.services.items.map((s) => s.title),
+    t.contact.serviceOther,
+  ];
 
   const setField = (name: keyof ContactFormValues, value: string) => {
     setValues((prev) => ({ ...prev, [name]: value }));
@@ -87,7 +111,7 @@ export function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const nextErrors = validateContactForm(values);
+    const nextErrors = validateContactForm(values, t.contact.errors);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
@@ -104,9 +128,8 @@ export function Contact() {
 
   return (
     <section
-      id="contact"
       aria-labelledby="contact-heading"
-      className="relative scroll-mt-24 border-t border-border py-24 sm:py-32"
+      className="relative scroll-mt-8 border-t border-border py-24 sm:py-32"
     >
       <Container>
         <div className="grid gap-12 lg:grid-cols-[1fr_1.25fr] lg:gap-16">
@@ -114,7 +137,7 @@ export function Contact() {
           <div>
             <Reveal>
               <Badge variant="subtle" dot>
-                Contact
+                {t.contact.badge}
               </Badge>
             </Reveal>
             <Reveal delay={0.08}>
@@ -122,13 +145,12 @@ export function Contact() {
                 id="contact-heading"
                 className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
               >
-                Let&rsquo;s build something great
+                {t.contact.heading}
               </h2>
             </Reveal>
             <Reveal delay={0.16}>
               <p className="mt-4 max-w-md text-balance text-lg text-foreground-muted">
-                Tell us about your project and we&rsquo;ll get back to you within
-                24 hours with next steps.
+                {t.contact.subheading}
               </p>
             </Reveal>
 
@@ -179,56 +201,45 @@ export function Contact() {
               className="rounded-3xl border border-border bg-surface p-6 shadow-sm sm:p-8"
             >
               <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Full name" htmlFor="fullName" required error={errors.fullName}>
+                <Field label={t.contact.form.fullName} htmlFor="fullName" required error={errors.fullName}>
                   <Input
                     id="fullName"
                     name="fullName"
                     autoComplete="name"
-                    placeholder="Jane Doe"
+                    placeholder={t.contact.form.fullNamePlaceholder}
                     value={values.fullName}
                     invalid={!!errors.fullName}
                     onChange={(e) => setField("fullName", e.target.value)}
                   />
                 </Field>
 
-                <Field label="Phone" htmlFor="phone" required error={errors.phone}>
+                <Field label={t.contact.form.phone} htmlFor="phone" required error={errors.phone}>
                   <Input
                     id="phone"
                     name="phone"
                     type="tel"
                     autoComplete="tel"
-                    placeholder="+1 (555) 000-0000"
+                    placeholder={t.contact.form.phonePlaceholder}
                     value={values.phone}
                     invalid={!!errors.phone}
                     onChange={(e) => setField("phone", e.target.value)}
                   />
                 </Field>
 
-                <Field label="Email" htmlFor="email" required error={errors.email}>
+                <Field label={t.contact.form.email} htmlFor="email" required error={errors.email}>
                   <Input
                     id="email"
                     name="email"
                     type="email"
                     autoComplete="email"
-                    placeholder="jane@company.com"
+                    placeholder={t.contact.form.emailPlaceholder}
                     value={values.email}
                     invalid={!!errors.email}
                     onChange={(e) => setField("email", e.target.value)}
                   />
                 </Field>
 
-                <Field label="Company" htmlFor="company" hint="Optional">
-                  <Input
-                    id="company"
-                    name="company"
-                    autoComplete="organization"
-                    placeholder="Company Inc."
-                    value={values.company}
-                    onChange={(e) => setField("company", e.target.value)}
-                  />
-                </Field>
-
-                <Field label="Service" htmlFor="service" required error={errors.service}>
+                <Field label={t.contact.form.service} htmlFor="service" required error={errors.service}>
                   <Select
                     id="service"
                     name="service"
@@ -237,7 +248,7 @@ export function Contact() {
                     onChange={(e) => setField("service", e.target.value)}
                   >
                     <option value="" disabled>
-                      Select a service
+                      {t.contact.form.selectService}
                     </option>
                     {serviceOptions.map((opt) => (
                       <option key={opt} value={opt}>
@@ -247,27 +258,8 @@ export function Contact() {
                   </Select>
                 </Field>
 
-                <Field label="Budget" htmlFor="budget" required error={errors.budget}>
-                  <Select
-                    id="budget"
-                    name="budget"
-                    value={values.budget}
-                    invalid={!!errors.budget}
-                    onChange={(e) => setField("budget", e.target.value)}
-                  >
-                    <option value="" disabled>
-                      Select a range
-                    </option>
-                    {budgetOptions.map((opt) => (
-                      <option key={opt} value={opt}>
-                        {opt}
-                      </option>
-                    ))}
-                  </Select>
-                </Field>
-
                 <Field
-                  label="Message"
+                  label={t.contact.form.message}
                   htmlFor="message"
                   required
                   error={errors.message}
@@ -277,7 +269,7 @@ export function Contact() {
                     id="message"
                     name="message"
                     rows={5}
-                    placeholder="Tell us about your project, goals, and timeline…"
+                    placeholder={t.contact.form.messagePlaceholder}
                     value={values.message}
                     invalid={!!errors.message}
                     onChange={(e) => setField("message", e.target.value)}
@@ -292,12 +284,11 @@ export function Contact() {
                 isLoading={submitting}
                 rightIcon={<Send className="size-4" />}
               >
-                {submitting ? "Sending…" : "Send message"}
+                {submitting ? t.contact.form.submitting : t.contact.form.submit}
               </Button>
 
               <p className="mt-4 text-center text-xs text-foreground-subtle">
-                We&rsquo;ll never share your details. By submitting you agree to
-                our privacy policy.
+                {t.contact.form.privacy}
               </p>
             </form>
           </Reveal>

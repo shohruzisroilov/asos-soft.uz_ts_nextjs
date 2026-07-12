@@ -3,7 +3,7 @@
  * Rendered via the <JsonLd> component. Keep values in sync with siteConfig.
  */
 import { siteConfig } from "@/config/site";
-import type { AccordionItemData } from "@/components/ui/accordion";
+import type { Locale } from "@/i18n/config";
 
 const socials = Object.values(siteConfig.social);
 
@@ -27,14 +27,14 @@ export function organizationSchema() {
       email: siteConfig.contact.email,
       telephone: siteConfig.contact.phone,
       contactType: "customer support",
-      availableLanguage: ["English"],
+      availableLanguage: ["Uzbek", "Russian", "English"],
       areaServed: siteConfig.business.areaServed,
     },
   };
 }
 
 /** WebSite — enables sitelinks search box & site name in results. */
-export function webSiteSchema() {
+export function webSiteSchema(locale: Locale = "uz") {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -43,7 +43,7 @@ export function webSiteSchema() {
     name: siteConfig.name,
     description: siteConfig.description,
     publisher: { "@id": `${siteConfig.url}/#organization` },
-    inLanguage: "en",
+    inLanguage: locale,
   };
 }
 
@@ -73,7 +73,7 @@ export function localBusinessSchema() {
 }
 
 /** FAQPage — eligible for the FAQ rich result. */
-export function faqSchema(items: AccordionItemData[]) {
+export function faqSchema(items: { question: string; answer: string }[]) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",

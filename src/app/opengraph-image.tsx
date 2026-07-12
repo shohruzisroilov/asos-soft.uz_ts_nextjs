@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import { ImageResponse } from "next/og";
 import { siteConfig } from "@/config/site";
 
@@ -7,6 +9,10 @@ export const contentType = "image/png";
 
 /** Dynamically generated social share image (Open Graph + Twitter). */
 export default function OpengraphImage() {
+  const logoPath = path.join(process.cwd(), "public/logo-black.png");
+  const logoData = fs.readFileSync(logoPath);
+  const logoBase64 = `data:image/png;base64,${logoData.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -40,15 +46,20 @@ export default function OpengraphImage() {
               height: 72,
               borderRadius: 18,
               background: "#fafafa",
-              color: "#0a0a0a",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 44,
-              fontWeight: 700,
             }}
           >
-            A
+            <img
+              src={logoBase64}
+              alt=""
+              style={{
+                width: "60%",
+                height: "60%",
+                objectFit: "contain",
+              }}
+            />
           </div>
           <div style={{ fontSize: 40, fontWeight: 600 }}>{siteConfig.name}</div>
         </div>
@@ -78,3 +89,4 @@ export default function OpengraphImage() {
     { ...size }
   );
 }
+

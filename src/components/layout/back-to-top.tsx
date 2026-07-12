@@ -6,7 +6,13 @@ import { cn } from "@/lib/utils";
 /**
  * Smoothly scrolls to the top of the page. Honors prefers-reduced-motion.
  */
-export function BackToTop({ className }: { className?: string }) {
+export function BackToTop({
+  className,
+  label = "Back to top",
+}: {
+  className?: string;
+  label?: string;
+}) {
   const handleClick = () => {
     const prefersReduced =
       typeof window !== "undefined" &&
@@ -25,7 +31,7 @@ export function BackToTop({ className }: { className?: string }) {
         className
       )}
     >
-      Back to top
+      {label}
       <span className="flex size-5 items-center justify-center rounded-full bg-accent text-accent-foreground transition-transform duration-200 ease-[var(--ease-out-expo)] group-hover:-translate-y-0.5">
         <ArrowUp className="size-3" strokeWidth={2.5} />
       </span>

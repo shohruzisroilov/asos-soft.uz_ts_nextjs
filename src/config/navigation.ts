@@ -1,63 +1,84 @@
 /**
- * Navigation structure — used by the header, footer, and mobile menu.
+ * Navigation structure — hrefs + dictionary keys. Labels are resolved from
+ * the active locale's dictionary (dict.nav) so the menu is fully translated.
  */
+import { locales } from "@/i18n/config";
+
+/** A key into dict.nav — used to look up the translated label. */
+export type NavKey =
+  | "home"
+  | "services"
+  | "portfolio"
+  | "technologies"
+  | "about"
+  | "contact";
 
 export interface NavItem {
-  label: string;
+  key: NavKey;
+  /** Same-page section anchor (or "/" for the top of the home page). */
   href: string;
-  description?: string;
 }
 
-export interface NavGroup {
-  title: string;
-  items: NavItem[];
-}
-
+/*
+ * This is a single-page site, so every nav target is an in-page section
+ * anchor. "About" maps to the "Why AsosSoft" section (there's no separate
+ * about page). Items without a matching section (e.g. Blog) are omitted so
+ * no link is ever dead.
+ */
 export const mainNav: NavItem[] = [
-  { label: "Home", href: "/" },
-  { label: "Services", href: "/services" },
-  { label: "Portfolio", href: "/portfolio" },
-  { label: "Technologies", href: "/technologies" },
-  { label: "About", href: "/about" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
+  { key: "home", href: "/" },
+  { key: "services", href: "#services" },
+  { key: "portfolio", href: "#portfolio" },
+  { key: "technologies", href: "#technologies" },
+  { key: "about", href: "#why-choose" },
+  { key: "contact", href: "#contact" },
 ];
 
-export const footerNav: NavGroup[] = [
-  {
-    title: "Quick Links",
-    items: [
-      { label: "Home", href: "/" },
-      { label: "Services", href: "/services" },
-      { label: "Portfolio", href: "/portfolio" },
-      { label: "About", href: "/about" },
-      { label: "Blog", href: "/blog" },
-      { label: "Contact", href: "/contact" },
-    ],
-  },
-  {
-    title: "Services",
-    items: [
-      { label: "Website Development", href: "/services/website-development" },
-      { label: "Mobile Apps", href: "/services/mobile-apps" },
-      { label: "AI Solutions", href: "/services/ai-solutions" },
-      { label: "CRM Development", href: "/services/crm-development" },
-      { label: "Cloud Deployment", href: "/services/cloud-deployment" },
-      { label: "UI/UX Design", href: "/services/ui-ux-design" },
-    ],
-  },
+/** Footer "Quick Links" — a subset of the main nav, by key. */
+export const footerQuickLinks: NavItem[] = [
+  { key: "home", href: "/" },
+  { key: "services", href: "#services" },
+  { key: "portfolio", href: "#portfolio" },
+  { key: "about", href: "#why-choose" },
+  { key: "contact", href: "#contact" },
 ];
-
-export const ctaConfig = {
-  label: "Get Quote",
-  href: "/contact",
-} as const;
 
 /**
- * Whether `href` is the active route for `pathname`.
+ * Footer "Services" links. There are no per-service pages yet, so each points
+ * to the contact section to request a quote. Labels come from
+ * dict.footer.servicesLinks in the SAME order.
+ */
+export const footerServiceLinks: string[] = [
+  "#contact",
+  "#contact",
+  "#contact",
+  "#contact",
+  "#contact",
+  "#contact",
+];
+
+/** CTA button target. Label comes from dict.nav.cta. */
+export const ctaConfig = {
+  href: "#contact",
+} as const;
+
+/** Remove a leading `/<locale>` segment, so `/uz/services` → `/services`. */
+function stripLocale(pathname: string): string {
+  const segments = pathname.split("/");
+  if (segments.length > 1 && (locales as readonly string[]).includes(segments[1])) {
+    const rest = "/" + segments.slice(2).join("/");
+    return rest === "/" ? "/" : rest.replace(/\/$/, "");
+  }
+  return pathname;
+}
+
+/**
+ * Whether `href` (locale-agnostic, e.g. "/services") is the active route for
+ * the current `pathname` (locale-prefixed, e.g. "/uz/services").
  * "/" matches only the exact home path; others match nested routes too.
  */
 export function isActivePath(pathname: string, href: string): boolean {
-  if (href === "/") return pathname === "/";
-  return pathname === href || pathname.startsWith(`${href}/`);
+  const path = stripLocale(pathname);
+  if (href === "/") return path === "/";
+  return path === href || path.startsWith(`${href}/`);
 }

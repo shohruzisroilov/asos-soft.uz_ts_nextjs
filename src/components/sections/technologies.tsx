@@ -4,6 +4,7 @@ import { m, type Variants } from "framer-motion";
 import { Container, Badge } from "@/components/ui";
 import { Reveal } from "@/components/shared";
 import { technologies } from "@/data/technologies";
+import { useI18n } from "@/providers/i18n-provider";
 import { viewportOnce } from "@/lib/motion";
 
 const gridContainer: Variants = {
@@ -22,18 +23,20 @@ const tileVariant: Variants = {
 };
 
 export function Technologies() {
+  const { t } = useI18n();
+
   return (
     <section
       id="technologies"
       aria-labelledby="technologies-heading"
-      className="relative scroll-mt-24 py-24 sm:py-32"
+      className="relative scroll-mt-8 py-24 sm:py-32"
     >
       <Container>
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
           <Reveal>
             <Badge variant="subtle" dot>
-              Our stack
+              {t.technologies.badge}
             </Badge>
           </Reveal>
           <Reveal delay={0.08}>
@@ -41,13 +44,12 @@ export function Technologies() {
               id="technologies-heading"
               className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
             >
-              Technologies we build with
+              {t.technologies.heading}
             </h2>
           </Reveal>
           <Reveal delay={0.16}>
             <p className="mt-4 text-balance text-lg text-foreground-muted">
-              A modern, battle-tested toolkit — chosen for performance,
-              reliability, and long-term maintainability.
+              {t.technologies.subheading}
             </p>
           </Reveal>
         </div>

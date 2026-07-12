@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { m, type Variants } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 import { Container, Badge } from "@/components/ui";
 import { Reveal } from "@/components/shared";
-import { services, type ServiceItem } from "@/data/services";
+import { services } from "@/data/services";
+import { useI18n, useLocalizedHref } from "@/providers/i18n-provider";
 import { viewportOnce } from "@/lib/motion";
 
 const gridContainer: Variants = {
@@ -22,33 +21,37 @@ const cardVariant: Variants = {
   },
 };
 
-function ServiceCard({ service }: { service: ServiceItem }) {
-  const { icon: Icon, title, description, slug } = service;
+function ServiceCard({
+  image,
+  title,
+  description,
+}: {
+  image: string;
+  title: string;
+  description: string;
+}) {
+  const localizedHref = useLocalizedHref();
 
   return (
     <m.div variants={cardVariant}>
-      <Link
-        href={`/services/${slug}`}
-        className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface p-6 transition-all duration-300 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-foreground/20 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      <a
+        href={localizedHref("#contact")}
+        className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-all duration-300 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-foreground/20 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
-        {/* Hover glow */}
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-          style={{
-            background:
-              "radial-gradient(340px circle at 50% 0%, color-mix(in oklab, var(--foreground) 8%, transparent), transparent 70%)",
-          }}
-        />
+        {/* Service illustration cover */}
+        <div className="relative aspect-[16/10] overflow-hidden bg-background-subtle">
+          <img
+            src={image}
+            alt={title}
+            className="h-full w-full object-cover transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-105"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-black/[0.02] transition-colors duration-300 group-hover:bg-black/[0.08]" />
+        </div>
 
-        <div className="relative flex h-full flex-col">
-          {/* Icon */}
-          <span className="flex size-12 items-center justify-center rounded-xl border border-border bg-background-subtle text-foreground transition-all duration-300 ease-[var(--ease-out-expo)] group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:border-transparent group-hover:bg-accent group-hover:text-accent-foreground group-hover:shadow-md">
-            <Icon className="size-6" strokeWidth={1.75} aria-hidden />
-          </span>
-
+        <div className="flex flex-1 flex-col p-6">
           {/* Title */}
-          <h3 className="mt-5 text-lg font-semibold tracking-tight text-foreground">
+          <h3 className="text-lg font-semibold tracking-tight text-foreground transition-colors group-hover:text-accent">
             {title}
           </h3>
 
@@ -56,31 +59,27 @@ function ServiceCard({ service }: { service: ServiceItem }) {
           <p className="mt-2 flex-1 text-sm leading-relaxed text-foreground-muted">
             {description}
           </p>
-
-          {/* Learn More */}
-          <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
-            Learn more
-            <ArrowRight className="size-4 transition-transform duration-200 ease-[var(--ease-out-expo)] group-hover:translate-x-1" />
-          </span>
         </div>
-      </Link>
+      </a>
     </m.div>
   );
 }
 
 export function Services() {
+  const { t } = useI18n();
+
   return (
     <section
       id="services"
       aria-labelledby="services-heading"
-      className="relative scroll-mt-24 py-24 sm:py-32"
+      className="relative scroll-mt-8 py-24 sm:py-32"
     >
       <Container>
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
           <Reveal>
             <Badge variant="subtle" dot>
-              What we do
+              {t.services.badge}
             </Badge>
           </Reveal>
           <Reveal delay={0.08}>
@@ -88,13 +87,12 @@ export function Services() {
               id="services-heading"
               className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
             >
-              Services built to scale your business
+              {t.services.heading}
             </h2>
           </Reveal>
           <Reveal delay={0.16}>
             <p className="mt-4 text-balance text-lg text-foreground-muted">
-              From first line of code to launch and beyond — everything you need
-              to design, build, and grow a modern digital product.
+              {t.services.subheading}
             </p>
           </Reveal>
         </div>
@@ -107,8 +105,13 @@ export function Services() {
           viewport={viewportOnce}
           className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {services.map((service) => (
-            <ServiceCard key={service.slug} service={service} />
+          {services.map((service, i) => (
+            <ServiceCard
+              key={service.slug}
+              image={service.image}
+              title={t.services.items[i].title}
+              description={t.services.items[i].description}
+            />
           ))}
         </m.div>
       </Container>

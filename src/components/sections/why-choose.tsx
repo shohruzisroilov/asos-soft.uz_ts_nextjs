@@ -1,9 +1,11 @@
 "use client";
 
 import { m, type Variants } from "framer-motion";
+import { type LucideIcon } from "lucide-react";
 import { Container, Badge } from "@/components/ui";
 import { Reveal } from "@/components/shared";
-import { reasons, type Reason } from "@/data/why-choose";
+import { reasons } from "@/data/why-choose";
+import { useI18n } from "@/providers/i18n-provider";
 import { viewportOnce } from "@/lib/motion";
 
 const gridContainer: Variants = {
@@ -20,9 +22,15 @@ const cardVariant: Variants = {
   },
 };
 
-function ReasonCard({ reason }: { reason: Reason }) {
-  const { icon: Icon, title, description } = reason;
-
+function ReasonCard({
+  icon: Icon,
+  title,
+  description,
+}: {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}) {
   return (
     <m.div variants={cardVariant}>
       <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface p-6 transition-all duration-300 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-foreground/20 hover:shadow-lg">
@@ -57,18 +65,20 @@ function ReasonCard({ reason }: { reason: Reason }) {
 }
 
 export function WhyChoose() {
+  const { t } = useI18n();
+
   return (
     <section
       id="why-choose"
       aria-labelledby="why-choose-heading"
-      className="relative scroll-mt-24 border-t border-border bg-background-subtle py-24 sm:py-32"
+      className="relative scroll-mt-8 border-t border-border bg-background-subtle py-24 sm:py-32"
     >
       <Container>
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
           <Reveal>
             <Badge variant="subtle" dot>
-              Why AsosSoft
+              {t.whyChoose.badge}
             </Badge>
           </Reveal>
           <Reveal delay={0.08}>
@@ -76,13 +86,12 @@ export function WhyChoose() {
               id="why-choose-heading"
               className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
             >
-              Built to earn your trust
+              {t.whyChoose.heading}
             </h2>
           </Reveal>
           <Reveal delay={0.16}>
             <p className="mt-4 text-balance text-lg text-foreground-muted">
-              Everything that makes AsosSoft the right long-term partner for your
-              digital product.
+              {t.whyChoose.subheading}
             </p>
           </Reveal>
         </div>
@@ -95,8 +104,13 @@ export function WhyChoose() {
           viewport={viewportOnce}
           className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
         >
-          {reasons.map((reason) => (
-            <ReasonCard key={reason.title} reason={reason} />
+          {reasons.map((reason, i) => (
+            <ReasonCard
+              key={i}
+              icon={reason.icon}
+              title={t.whyChoose.items[i].title}
+              description={t.whyChoose.items[i].description}
+            />
           ))}
         </m.div>
       </Container>

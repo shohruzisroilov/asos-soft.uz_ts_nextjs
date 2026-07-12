@@ -1,0 +1,21 @@
+{
+  "name": "AsosSoft — Software that moves your business forward",
+  "short_name": "AsosSoft",
+  "description": "AsosSoft is a premium software studio building high-performance web, mobile, and cloud products for ambitious companies.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    {
+      "src": "/icon",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-icon",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

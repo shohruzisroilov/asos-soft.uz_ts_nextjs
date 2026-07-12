@@ -1,20 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, ArrowUpRight } from "lucide-react";
 import { m, useScroll, useSpring } from "framer-motion";
-import { mainNav, ctaConfig, isActivePath } from "@/config/navigation";
+import { mainNav, isActivePath } from "@/config/navigation";
+import { siteConfig } from "@/config/site";
 import { Container } from "@/components/ui/container";
 import { Logo } from "@/components/shared/logo";
 import { ThemeToggle } from "./theme-toggle";
+import { LanguageSwitcher } from "./language-switcher";
 import { MobileNav } from "./mobile-nav";
+import { useI18n, useLocalizedHref } from "@/providers/i18n-provider";
 import { useScrolled } from "@/hooks/use-scrolled";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const pathname = usePathname();
+  const { t } = useI18n();
+  const localizedHref = useLocalizedHref();
   const scrolled = useScrolled(8);
   const [menuOpen, setMenuOpen] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
@@ -30,9 +34,6 @@ export function Navbar() {
   return (
     <>
       <m.header
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
           "sticky top-0 z-40 w-full transition-[background,box-shadow,border-color] duration-300 ease-[var(--ease-out-expo)]",
           scrolled
@@ -47,7 +48,7 @@ export function Navbar() {
               scrolled ? "h-16" : "h-20"
             )}
           >
-            <Logo />
+            <Logo href={localizedHref("/")} />
 
             {/* Desktop nav — animated hover pill + sliding active indicator */}
             <nav
@@ -58,9 +59,9 @@ export function Navbar() {
               {mainNav.map((item) => {
                 const active = isActivePath(pathname, item.href);
                 return (
-                  <Link
+                  <a
                     key={item.href}
-                    href={item.href}
+                    href={localizedHref(item.href)}
                     aria-current={active ? "page" : undefined}
                     onMouseEnter={() => setHovered(item.href)}
                     className={cn(
@@ -82,7 +83,7 @@ export function Navbar() {
                         }}
                       />
                     )}
-                    <span className="relative z-10">{item.label}</span>
+                    <span className="relative z-10">{t.nav[item.key]}</span>
                     {/* Active underline slides between items */}
                     {active && (
                       <m.span
@@ -95,18 +96,21 @@ export function Navbar() {
                         }}
                       />
                     )}
-                  </Link>
+                  </a>
                 );
               })}
             </nav>
 
             {/* Actions */}
             <div className="flex items-center gap-2">
+              <LanguageSwitcher />
               <ThemeToggle />
 
-              {/* Get Quote — group hover animation on the arrow */}
-              <Link
-                href={ctaConfig.href}
+              {/* Get in touch — links to Telegram; group hover animation */}
+              <a
+                href={siteConfig.social.telegram}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={cn(
                   "group relative hidden items-center gap-1.5 overflow-hidden rounded-xl bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground shadow-sm sm:inline-flex",
                   "transition-all duration-200 ease-[var(--ease-out-expo)] hover:-translate-y-0.5 hover:shadow-md",
@@ -118,9 +122,9 @@ export function Navbar() {
                   aria-hidden
                   className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:translate-x-full"
                 />
-                <span className="relative">{ctaConfig.label}</span>
+                <span className="relative">{t.nav.cta}</span>
                 <ArrowUpRight className="relative size-4 transition-transform duration-200 ease-[var(--ease-out-expo)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
+              </a>
 
               {/* Mobile trigger */}
               <button

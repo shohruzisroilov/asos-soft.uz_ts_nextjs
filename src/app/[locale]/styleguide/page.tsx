@@ -8,8 +8,11 @@ import {
   Palette,
   Mail,
 } from "lucide-react";
+import { notFound } from "next/navigation";
 import { Navbar, Footer } from "@/components/layout";
 import { Reveal } from "@/components/shared";
+import { isLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n";
 import {
   Container,
   Button,
@@ -54,7 +57,7 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className="scroll-mt-24 py-14 first:pt-8">
+    <section id={id} className="scroll-mt-8 py-14 first:pt-8">
       <Reveal>
         <p className="text-xs font-semibold uppercase tracking-wider text-foreground-subtle">
           {eyebrow}
@@ -80,7 +83,15 @@ const swatches = [
   { name: "border", var: "bg-border" },
 ];
 
-export default function StyleguidePage() {
+export default async function StyleguidePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale: raw } = await params;
+  if (!isLocale(raw)) notFound();
+  const dict = getDictionary(raw);
+
   return (
     <>
       <Navbar />
@@ -379,7 +390,7 @@ export default function StyleguidePage() {
           </Section>
         </Container>
       </main>
-      <Footer />
+      <Footer dict={dict} locale={raw} />
     </>
   );
 }

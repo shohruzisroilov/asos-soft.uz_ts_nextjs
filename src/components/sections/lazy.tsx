@@ -24,7 +24,7 @@ const ContactImpl = dynamic(() => import("./contact").then((m) => m.Contact), {
 
 export function LazyTestimonials() {
   return (
-    <LazyOnView minHeight={560}>
+    <LazyOnView id="testimonials" className="scroll-mt-8" minHeight={560}>
       <TestimonialsImpl />
     </LazyOnView>
   );
@@ -32,7 +32,7 @@ export function LazyTestimonials() {
 
 export function LazyContact() {
   return (
-    <LazyOnView minHeight={680}>
+    <LazyOnView id="contact" className="scroll-mt-8" minHeight={680}>
       <ContactImpl />
     </LazyOnView>
   );

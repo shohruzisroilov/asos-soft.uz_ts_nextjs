@@ -1,22 +1,28 @@
-import Link from "next/link";
 import { Container, Badge, Accordion, buttonVariants } from "@/components/ui";
 import { Reveal } from "@/components/shared";
-import { faqs } from "@/data/faq";
+import type { Dictionary } from "@/i18n";
+import { withLocale, type Locale } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
-export function Faq() {
+export function Faq({
+  dict,
+  locale,
+}: {
+  dict: Dictionary["faq"];
+  locale: Locale;
+}) {
   return (
     <section
       id="faq"
       aria-labelledby="faq-heading"
-      className="relative scroll-mt-24 border-t border-border py-24 sm:py-32"
+      className="relative scroll-mt-8 border-t border-border py-24 sm:py-32"
     >
       <Container size="md">
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
           <Reveal>
             <Badge variant="subtle" dot>
-              FAQ
+              {dict.badge}
             </Badge>
           </Reveal>
           <Reveal delay={0.08}>
@@ -24,34 +30,31 @@ export function Faq() {
               id="faq-heading"
               className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
             >
-              Frequently asked questions
+              {dict.heading}
             </h2>
           </Reveal>
           <Reveal delay={0.16}>
             <p className="mt-4 text-balance text-lg text-foreground-muted">
-              Everything you need to know about working with AsosSoft. Can&rsquo;t
-              find an answer? We&rsquo;re one message away.
+              {dict.subheading}
             </p>
           </Reveal>
         </div>
 
         {/* Accordion */}
         <Reveal delay={0.2} className="mx-auto mt-14 max-w-3xl">
-          <Accordion items={faqs} type="single" defaultOpenIndex={0} />
+          <Accordion items={dict.items} type="single" defaultOpenIndex={0} />
         </Reveal>
 
         {/* Footer CTA */}
         <Reveal delay={0.1}>
           <div className="mx-auto mt-10 flex flex-col items-center justify-center gap-3 text-center sm:flex-row">
-            <p className="text-sm text-foreground-muted">
-              Still have questions?
-            </p>
-            <Link
-              href="/contact"
+            <p className="text-sm text-foreground-muted">{dict.still}</p>
+            <a
+              href={withLocale(locale, "#contact")}
               className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
             >
-              Get in touch
-            </Link>
+              {dict.getInTouch}
+            </a>
           </div>
         </Reveal>
       </Container>

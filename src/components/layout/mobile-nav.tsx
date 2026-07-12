@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, m } from "framer-motion";
 import { X, ArrowUpRight } from "lucide-react";
-import { mainNav, ctaConfig, isActivePath } from "@/config/navigation";
+import { mainNav, isActivePath } from "@/config/navigation";
+import { siteConfig } from "@/config/site";
 import { Logo } from "@/components/shared/logo";
 import { ThemeToggle } from "./theme-toggle";
+import { LanguageSwitcher } from "./language-switcher";
+import { useI18n, useLocalizedHref } from "@/providers/i18n-provider";
 import { cn } from "@/lib/utils";
 
 const listVariants = {
@@ -28,6 +30,8 @@ export function MobileNav({
   onClose: () => void;
 }) {
   const pathname = usePathname();
+  const { t } = useI18n();
+  const localizedHref = useLocalizedHref();
 
   // Lock body scroll + close on Escape while open
   useEffect(() => {
@@ -68,13 +72,15 @@ export function MobileNav({
             aria-label="Mobile"
           >
             <div className="flex items-center justify-between">
-              <Logo />
+              <Logo href={localizedHref("/")} />
               <div className="flex items-center gap-2">
+                <LanguageSwitcher />
                 <ThemeToggle />
                 <button
+                  type="button"
                   onClick={onClose}
                   aria-label="Close menu"
-                  className="inline-flex size-10 items-center justify-center rounded-xl border border-border bg-surface text-foreground-muted transition-colors hover:bg-foreground/[0.06] hover:text-foreground active:scale-95"
+                  className="inline-flex size-10 items-center justify-center rounded-xl border border-border bg-surface text-foreground shadow-xs transition-all duration-200 ease-[var(--ease-out-expo)] hover:bg-background-subtle hover:border-foreground/20 active:scale-95"
                 >
                   <X className="size-5" />
                 </button>
@@ -91,8 +97,8 @@ export function MobileNav({
                 const active = isActivePath(pathname, item.href);
                 return (
                   <m.li key={item.href} variants={itemVariants}>
-                    <Link
-                      href={item.href}
+                    <a
+                      href={localizedHref(item.href)}
                       onClick={onClose}
                       aria-current={active ? "page" : undefined}
                       className={cn(
@@ -102,28 +108,30 @@ export function MobileNav({
                           : "text-foreground-muted hover:bg-foreground/[0.04] hover:text-foreground"
                       )}
                     >
-                      {item.label}
+                      {t.nav[item.key]}
                       {active && (
                         <span
                           className="size-1.5 rounded-full bg-foreground"
                           aria-hidden
                         />
                       )}
-                    </Link>
+                    </a>
                   </m.li>
                 );
               })}
             </m.ul>
 
             <m.div variants={itemVariants} initial="hidden" animate="visible">
-              <Link
-                href={ctaConfig.href}
+              <a
+                href={siteConfig.social.telegram}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={onClose}
                 className="group mt-6 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-accent px-5 py-3.5 text-sm font-medium text-accent-foreground shadow-sm transition-all duration-200 ease-[var(--ease-out-expo)] hover:shadow-md active:scale-[0.98]"
               >
-                {ctaConfig.label}
+                {t.nav.cta}
                 <ArrowUpRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
+              </a>
             </m.div>
           </m.nav>
         </m.div>

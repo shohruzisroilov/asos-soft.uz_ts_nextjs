@@ -4,6 +4,12 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export interface LazyOnViewProps {
   children: ReactNode;
+  /**
+   * Anchor id placed on the always-present wrapper, so same-page links (e.g.
+   * "#contact") can scroll here even before the heavy children have mounted —
+   * the scroll then brings the wrapper into view and triggers the load.
+   */
+  id?: string;
   /** Reserved height before load — prevents layout shift (CLS). */
   minHeight?: number;
   /** How early to start loading before the block scrolls into view. */
@@ -18,6 +24,7 @@ export interface LazyOnViewProps {
  */
 export function LazyOnView({
   children,
+  id,
   minHeight = 480,
   rootMargin = "800px",
   className,
@@ -38,11 +45,24 @@ export function LazyOnView({
       { rootMargin }
     );
     io.observe(el);
+
+    // If the page loads already anchored to this section (or the browser is
+    // restoring a hash), mount immediately so the target exists to scroll to.
+    if (id && typeof window !== "undefined" && window.location.hash === `#${id}`) {
+      setVisible(true);
+      io.disconnect();
+    }
+
     return () => io.disconnect();
-  }, [rootMargin, visible]);
+  }, [rootMargin, visible, id]);
 
   return (
-    <div ref={ref} className={className} style={visible ? undefined : { minHeight }}>
+    <div
+      ref={ref}
+      id={id}
+      className={className}
+      style={visible ? undefined : { minHeight }}
+    >
       {visible ? children : null}
     </div>
   );

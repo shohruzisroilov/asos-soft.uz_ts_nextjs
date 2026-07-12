@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/config/site";
 
@@ -6,10 +7,12 @@ export function Logo({
   className,
   href = "/",
   showWordmark = true,
+  size = 46,
 }: {
   className?: string;
   href?: string;
   showWordmark?: boolean;
+  size?: number;
 }) {
   return (
     <Link
@@ -20,18 +23,37 @@ export function Logo({
         className
       )}
     >
-      {/* Monochrome mark */}
+      {/* Custom image mark */}
       <span
-        className="flex size-8 items-center justify-center rounded-lg bg-accent text-accent-foreground shadow-sm transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:rotate-[8deg]"
+        className="relative flex items-center justify-center transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:rotate-[8deg]"
+        style={{ width: size, height: size }}
         aria-hidden
       >
-        <span className="text-sm font-bold tracking-tight">A</span>
+        <Image
+          src="/logo-black.png"
+          alt=""
+          width={size}
+          height={size}
+          className="dark:hidden object-contain"
+          priority
+        />
+        <Image
+          src="/logo-white.png"
+          alt=""
+          width={size}
+          height={size}
+          className="hidden dark:block object-contain"
+          priority
+        />
       </span>
       {showWordmark && (
-        <span className="text-[0.95rem] font-semibold tracking-tight text-foreground">
+        <span className="text-[1.05rem] font-semibold tracking-tight text-foreground">
           {siteConfig.name}
         </span>
       )}
     </Link>
   );
 }
+
+
+

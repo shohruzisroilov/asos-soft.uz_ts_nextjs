@@ -2,13 +2,25 @@
 
 import { useRef } from "react";
 import { m, useScroll, useSpring } from "framer-motion";
+import { type LucideIcon } from "lucide-react";
 import { Container, Badge } from "@/components/ui";
 import { Reveal } from "@/components/shared";
-import { processSteps, type ProcessStep } from "@/data/process";
+import { processSteps } from "@/data/process";
+import { useI18n } from "@/providers/i18n-provider";
 
-function TimelineStep({ item, index }: { item: ProcessStep; index: number }) {
-  const { icon: Icon, step, title, description } = item;
-
+function TimelineStep({
+  icon: Icon,
+  step,
+  title,
+  description,
+  index,
+}: {
+  icon: LucideIcon;
+  step: string;
+  title: string;
+  description: string;
+  index: number;
+}) {
   return (
     <li className="relative flex gap-6 pb-12 last:pb-0 sm:gap-8">
       {/* Node on the track */}
@@ -52,6 +64,7 @@ function TimelineStep({ item, index }: { item: ProcessStep; index: number }) {
 }
 
 export function Process() {
+  const { t } = useI18n();
   const timelineRef = useRef<HTMLOListElement>(null);
 
   // Fill the progress line as the timeline scrolls through the viewport
@@ -69,14 +82,14 @@ export function Process() {
     <section
       id="process"
       aria-labelledby="process-heading"
-      className="relative scroll-mt-24 py-24 sm:py-32"
+      className="relative scroll-mt-8 py-24 sm:py-32"
     >
       <Container>
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
           <Reveal>
             <Badge variant="subtle" dot>
-              How we work
+              {t.process.badge}
             </Badge>
           </Reveal>
           <Reveal delay={0.08}>
@@ -84,13 +97,12 @@ export function Process() {
               id="process-heading"
               className="mt-5 text-balance text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl"
             >
-              Our development process
+              {t.process.heading}
             </h2>
           </Reveal>
           <Reveal delay={0.16}>
             <p className="mt-4 text-balance text-lg text-foreground-muted">
-              A proven, transparent path from first conversation to launch — and
-              long after.
+              {t.process.subheading}
             </p>
           </Reveal>
         </div>
@@ -110,7 +122,14 @@ export function Process() {
           />
 
           {processSteps.map((item, index) => (
-            <TimelineStep key={item.step} item={item} index={index} />
+            <TimelineStep
+              key={item.step}
+              icon={item.icon}
+              step={item.step}
+              title={t.process.items[index].title}
+              description={t.process.items[index].description}
+              index={index}
+            />
           ))}
         </ol>
       </Container>

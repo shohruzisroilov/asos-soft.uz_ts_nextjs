@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { m, useReducedMotion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Container, Badge, buttonVariants } from "@/components/ui";
@@ -8,9 +7,8 @@ import { CountUp } from "@/components/shared/count-up";
 import { Parallax } from "@/components/shared/parallax";
 import { AnimatedBackground } from "./animated-background";
 import { heroStats, floatingIcons } from "@/data/hero";
+import { useI18n, useLocalizedHref } from "@/providers/i18n-provider";
 import { cn } from "@/lib/utils";
-
-const HEADLINE = "Building Digital Solutions That Grow Your Business";
 
 /**
  * The hero's primary content uses CSS entrance animations (not JS) so the
@@ -20,6 +18,8 @@ const HEADLINE = "Building Digital Solutions That Grow Your Business";
  */
 export function Hero() {
   const reduceMotion = useReducedMotion();
+  const { t } = useI18n();
+  const localizedHref = useLocalizedHref();
 
   return (
     <section
@@ -34,17 +34,16 @@ export function Hero() {
         className="pointer-events-none absolute inset-0 -z-[5] hidden lg:block"
       >
         <div aria-hidden className="relative size-full">
-          {floatingIcons.map(({ icon: IconEl, label, className, delay, duration }) => (
+          {floatingIcons.map(({ src, alt, className, delay, duration }, i) => (
             <m.div
-              key={label}
+              key={i}
               className={cn("absolute", className)}
               initial={{ opacity: 0, scale: 0.6 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             >
               <m.div
-                className="glass flex size-14 items-center justify-center rounded-2xl text-foreground shadow-md"
-                title={label}
+                title={t.hero.floating[i]}
                 animate={reduceMotion ? undefined : { y: [0, -14, 0] }}
                 transition={{
                   duration,
@@ -53,7 +52,13 @@ export function Hero() {
                   delay,
                 }}
               >
-                <IconEl className="size-6" strokeWidth={1.75} />
+                <img
+                  src={src}
+                  alt={alt}
+                  className="size-14 drop-shadow-md"
+                  loading="lazy"
+                  draggable={false}
+                />
               </m.div>
             </m.div>
           ))}
@@ -66,7 +71,7 @@ export function Hero() {
           <div className="animate-fade-in-up" style={{ animationDelay: "0.05s" }}>
             <Badge variant="glass" size="lg" className="shadow-sm">
               <Sparkles className="size-3.5" />
-              Digital product studio for ambitious teams
+              {t.hero.eyebrow}
             </Badge>
           </div>
 
@@ -76,7 +81,7 @@ export function Hero() {
             className="mt-7 max-w-4xl animate-fade-in-up text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-gradient sm:text-6xl lg:text-7xl"
             style={{ animationDelay: "0.12s" }}
           >
-            {HEADLINE}
+            {t.hero.headline}
           </h1>
 
           {/* Subheadline */}
@@ -84,13 +89,9 @@ export function Hero() {
             className="mt-6 max-w-2xl animate-fade-in-up text-balance text-lg leading-relaxed text-foreground-muted"
             style={{ animationDelay: "0.2s" }}
           >
-            AsosSoft designs and develops{" "}
-            <span className="text-foreground">
-              websites, mobile apps, CRM systems, AI solutions, ERP, automation,
-              UI/UX, branding
-            </span>{" "}
-            and custom software — end-to-end products engineered to help your
-            business scale.
+            {t.hero.subheadlineBefore}
+            <span className="text-foreground">{t.hero.subheadlineHighlight}</span>
+            {t.hero.subheadlineAfter}
           </p>
 
           {/* CTAs */}
@@ -98,22 +99,22 @@ export function Hero() {
             className="mt-10 flex w-full animate-fade-in-up flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row"
             style={{ animationDelay: "0.28s" }}
           >
-            <Link
-              href="/contact"
+            <a
+              href={localizedHref("#contact")}
               className={cn(buttonVariants({ size: "lg" }), "group w-full sm:w-auto")}
             >
-              Get Free Consultation
+              {t.hero.ctaPrimary}
               <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
-            </Link>
-            <Link
-              href="/portfolio"
+            </a>
+            <a
+              href={localizedHref("#portfolio")}
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
                 "w-full sm:w-auto"
               )}
             >
-              View Portfolio
-            </Link>
+              {t.hero.ctaSecondary}
+            </a>
           </div>
 
           {/* Statistics cards */}
@@ -121,16 +122,16 @@ export function Hero() {
             className="mt-16 grid w-full max-w-3xl animate-fade-in-up grid-cols-2 gap-4 sm:grid-cols-4"
             style={{ animationDelay: "0.36s" }}
           >
-            {heroStats.map((stat) => (
+            {heroStats.map((stat, i) => (
               <div
-                key={stat.label}
+                key={i}
                 className="rounded-2xl border border-border bg-surface/60 p-5 backdrop-blur-sm transition-colors duration-300 hover:border-foreground/20"
               >
                 <dd className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
                   <CountUp value={stat.value} suffix={stat.suffix} />
                 </dd>
                 <dt className="mt-1.5 text-xs text-foreground-muted sm:text-sm">
-                  {stat.label}
+                  {t.hero.stats[i]}
                 </dt>
               </div>
             ))}

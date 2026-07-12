@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import {
   Hero,
   Services,
@@ -11,7 +12,8 @@ import { LazyTestimonials, LazyContact } from "@/components/sections/lazy";
 import { Navbar, Footer } from "@/components/layout";
 import { JsonLd } from "@/components/seo/json-ld";
 import { localBusinessSchema, faqSchema } from "@/lib/schema";
-import { faqs } from "@/data/faq";
+import { isLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n";
 
 /**
  * Home page.
@@ -20,7 +22,16 @@ import { faqs } from "@/data/faq";
  * The two heaviest, least-critical sections (Testimonials, Contact) are
  * deferred and loaded on scroll — see DeferredSections.
  */
-export default function HomePage() {
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale: raw } = await params;
+  if (!isLocale(raw)) notFound();
+  const locale = raw;
+  const dict = getDictionary(locale);
+
   return (
     <>
       <Navbar />
@@ -31,14 +42,14 @@ export default function HomePage() {
         <Technologies />
         <WhyChoose />
         <Process />
-        <Faq />
+        <Faq dict={dict.faq} locale={locale} />
         <LazyTestimonials />
         <LazyContact />
       </main>
-      <Footer />
+      <Footer dict={dict} locale={locale} />
 
       <JsonLd data={localBusinessSchema()} />
-      <JsonLd data={faqSchema(faqs)} />
+      <JsonLd data={faqSchema(dict.faq.items)} />
     </>
   );
 }
