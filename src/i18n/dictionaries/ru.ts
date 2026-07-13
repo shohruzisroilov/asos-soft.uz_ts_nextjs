@@ -83,7 +83,12 @@ export const ru: Dictionary = {
     badge: "Наши работы",
     heading: "Избранные проекты, которыми мы гордимся",
     subheading: "Реальные цифровые продукты для решения конкретных задач вашего бизнеса.",
-    visit: "Открыть сайт",
+    buttonLabels: {
+      web: "Открыть сайт",
+      app: "Открыть приложение",
+      bot: "Открыть бота",
+      private: "Закрытая система",
+    },
     categories: {
       All: "Все",
       Web: "Веб",
@@ -94,8 +99,8 @@ export const ru: Dictionary = {
     },
     items: [
       {
-        title: "Northwind Commerce",
-        description: "Современный интернет-магазин с быстрой витриной и управлением складом.",
+        title: "Sam Travel",
+        description: "Современный и удобный туристический сайт для путешествий по Европе и всему миру.",
       },
       {
         title: "Atlas CRM",
@@ -124,6 +129,16 @@ export const ru: Dictionary = {
     badge: "Наш стек",
     heading: "Технологии, на которых мы работаем",
     subheading: "Современный и надежный стек технологий, выбранный ради скорости и стабильности.",
+    groups: {
+      frontend: "Frontend разработка",
+      backend: "Backend и API решения",
+      mobile: "Мобильная разработка",
+      bot: "Telegram-боты",
+      desktop: "Desktop приложения",
+      devops: "DevOps и Облачные сервисы",
+      database: "Базы данных и Хранилища",
+      design: "Дизайн и Другие инструменты",
+    },
   },
 
   whyChoose: {

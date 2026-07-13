@@ -1,10 +1,10 @@
 import {
-  ShoppingBag,
   Users,
   Dumbbell,
   Sparkles,
   Building2,
   Truck,
+  Compass,
   type LucideIcon,
 } from "lucide-react";
 
@@ -18,27 +18,28 @@ export interface ProjectMeta {
   slug: string;
   category: ProjectCategory;
   technologies: string[];
-  liveUrl: string;
+  liveUrl?: string;
   githubUrl: string;
   icon: LucideIcon;
   image: string;
+  type?: "web" | "app" | "bot";
 }
 
 export const projects: ProjectMeta[] = [
   {
-    slug: "northwind-commerce",
-    category: "E-commerce",
-    technologies: ["Next.js", "Stripe", "PostgreSQL", "Tailwind"],
-    liveUrl: "https://example.com",
+    slug: "sam-travel",
+    category: "Web",
+    technologies: ["Next.js", "Tailwind CSS", "Framer Motion", "i18next"],
+    liveUrl: "https://sam-travel.uz",
     githubUrl: "https://github.com",
-    icon: ShoppingBag,
-    image: "/projects/northwind-commerce.png",
+    icon: Compass,
+    image: "/projects/sam-travel.png",
+    type: "web",
   },
   {
     slug: "atlas-crm",
     category: "SaaS",
     technologies: ["React", "Node.js", "Prisma", "tRPC"],
-    liveUrl: "https://example.com",
     githubUrl: "https://github.com",
     icon: Users,
     image: "/projects/atlas-crm.png",
@@ -47,16 +48,16 @@ export const projects: ProjectMeta[] = [
     slug: "pulse-fitness",
     category: "Mobile",
     technologies: ["React Native", "Expo", "Firebase"],
-    liveUrl: "https://example.com",
+    liveUrl: "https://play.google.com/store/apps",
     githubUrl: "https://github.com",
     icon: Dumbbell,
     image: "/projects/pulse-fitness.png",
+    type: "app",
   },
   {
     slug: "lumen-ai",
     category: "AI",
     technologies: ["Next.js", "OpenAI", "Pinecone", "LangChain"],
-    liveUrl: "https://example.com",
     githubUrl: "https://github.com",
     icon: Sparkles,
     image: "/projects/lumen-ai.png",
@@ -65,7 +66,6 @@ export const projects: ProjectMeta[] = [
     slug: "vertex-erp",
     category: "SaaS",
     technologies: ["Next.js", "tRPC", "PostgreSQL", "Redis"],
-    liveUrl: "https://example.com",
     githubUrl: "https://github.com",
     icon: Building2,
     image: "/projects/vertex-erp.png",
@@ -74,7 +74,6 @@ export const projects: ProjectMeta[] = [
     slug: "cargo-logistics",
     category: "Web",
     technologies: ["Next.js", "Mapbox", "Node.js", "WebSockets"],
-    liveUrl: "https://example.com",
     githubUrl: "https://github.com",
     icon: Truck,
     image: "/projects/cargo-logistics.png",

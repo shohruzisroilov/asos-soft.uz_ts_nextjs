@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, ArrowUpRight } from "lucide-react";
 import { m, useScroll, useSpring } from "framer-motion";
@@ -14,6 +14,7 @@ import { MobileNav } from "./mobile-nav";
 import { useI18n, useLocalizedHref } from "@/providers/i18n-provider";
 import { useScrolled } from "@/hooks/use-scrolled";
 import { cn } from "@/lib/utils";
+import { locales } from "@/i18n/config";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -22,6 +23,52 @@ export function Navbar() {
   const scrolled = useScrolled(8);
   const [menuOpen, setMenuOpen] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState<string>("home");
+
+  const isHome = pathname === "/" || locales.some((l) => pathname === `/${l}`);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY < 120) {
+        setActiveSection("home");
+        return;
+      }
+
+      if (
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 100
+      ) {
+        setActiveSection("contact");
+        return;
+      }
+
+      const sections = [
+        { key: "services", id: "services" },
+        { key: "portfolio", id: "portfolio" },
+        { key: "technologies", id: "technologies" },
+        { key: "about", id: "why-choose" },
+        { key: "contact", id: "contact" },
+      ];
+
+      let currentSection = "home";
+      for (const section of sections) {
+        const el = document.getElementById(section.id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 200 && rect.bottom > 200) {
+            currentSection = section.key;
+            break;
+          }
+        }
+      }
+
+      setActiveSection(currentSection);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Scroll-linked progress bar (smoothed with a spring)
   const { scrollYProgress } = useScroll();
@@ -57,7 +104,7 @@ export function Navbar() {
               onMouseLeave={() => setHovered(null)}
             >
               {mainNav.map((item) => {
-                const active = isActivePath(pathname, item.href);
+                const active = isHome ? activeSection === item.key : isActivePath(pathname, item.href);
                 return (
                   <a
                     key={item.href}
@@ -151,7 +198,7 @@ export function Navbar() {
         />
       </m.header>
 
-      <MobileNav open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <MobileNav open={menuOpen} onClose={() => setMenuOpen(false)} activeSection={activeSection} />
     </>
   );
 }

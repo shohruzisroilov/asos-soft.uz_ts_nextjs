@@ -83,7 +83,12 @@ export const uz: Dictionary = {
     badge: "Bizning ishlar",
     heading: "Biz amalga oshirgan tanlangan loyihalar",
     subheading: "Biznesingiz uchun yaratilgan real raqamli mahsulotlar.",
-    visit: "Saytga o‘tish",
+    buttonLabels: {
+      web: "Saytga o‘tish",
+      app: "Ilovani ko‘rish",
+      bot: "Botni ko‘rish",
+      private: "Yopiq tizim",
+    },
     categories: {
       All: "Barchasi",
       Web: "Veb",
@@ -94,8 +99,8 @@ export const uz: Dictionary = {
     },
     items: [
       {
-        title: "Northwind Commerce",
-        description: "Tezkor to'lovlar va ombor tizimiga ega zamonaviy internet-do'kon.",
+        title: "Sam Travel",
+        description: "Evropa va butun dunyo bo'ylab sayohatlar uchun zamonaviy va qulay turizm sayti.",
       },
       {
         title: "Atlas CRM",
@@ -124,6 +129,16 @@ export const uz: Dictionary = {
     badge: "Bizning stek",
     heading: "Biz ishlaydigan texnologiyalar",
     subheading: "Unumdorlik va ishonchlilik uchun tanlangan zamonaviy vositalar to‘plami.",
+    groups: {
+      frontend: "Frontend dasturlash",
+      backend: "Backend va API xizmatlari",
+      mobile: "Mobil ilovalar yaratish",
+      bot: "Telegram botlar",
+      desktop: "Desktop (Kompyuter) dasturlari",
+      devops: "DevOps va Cloud (Bulutli) tizimlar",
+      database: "Ma'lumotlar bazasi",
+      design: "Dizayn va Boshqalar",
+    },
   },
 
   whyChoose: {

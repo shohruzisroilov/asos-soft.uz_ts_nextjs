@@ -24,12 +24,12 @@ function ProjectCover({
   const { icon: Icon } = project;
 
   return (
-    <div className="relative aspect-[16/10] overflow-hidden bg-background-subtle">
+    <div className="relative aspect-[4/3] overflow-hidden bg-background-subtle">
       {/* Real product image */}
       <img
         src={project.image}
         alt={project.slug}
-        className="h-full w-full object-cover object-top transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-105"
+        className="h-full w-full object-cover object-center transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-105"
         loading="lazy"
       />
       {/* Semi-transparent dark overlay on hover to keep controls/badge readable */}
@@ -64,14 +64,31 @@ function ProjectCard({
   title,
   description,
   categoryLabel,
-  visitLabel,
+  buttonLabels,
 }: {
   project: ProjectMeta;
   title: string;
   description: string;
   categoryLabel: string;
-  visitLabel: string;
+  buttonLabels: {
+    web: string;
+    app: string;
+    bot: string;
+    private: string;
+  };
 }) {
+  const hasLink = !!project.liveUrl;
+  const projectType = project.type || "web";
+
+  let label = buttonLabels.web;
+  if (!hasLink) {
+    label = buttonLabels.private;
+  } else if (projectType === "app") {
+    label = buttonLabels.app;
+  } else if (projectType === "bot") {
+    label = buttonLabels.bot;
+  }
+
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-all duration-300 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-foreground/20 hover:shadow-lg">
       <ProjectCover project={project} categoryLabel={categoryLabel} />
@@ -80,32 +97,30 @@ function ProjectCard({
         <h3 className="text-lg font-semibold tracking-tight text-foreground">
           {title}
         </h3>
-        <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
+        <p className="mt-2 text-sm leading-relaxed text-foreground-muted flex-1">
           {description}
         </p>
 
-        {/* Technologies */}
-        <ul className="mt-4 flex flex-wrap gap-1.5">
-          {project.technologies.map((tech) => (
-            <li key={tech}>
-              <Badge variant="muted" size="sm">
-                {tech}
-              </Badge>
-            </li>
-          ))}
-        </ul>
-
         {/* Actions */}
         <div className="mt-6 flex items-center gap-2.5 pt-1">
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group/btn inline-flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-accent px-4 text-sm font-medium text-accent-foreground shadow-sm transition-all duration-200 ease-[var(--ease-out-expo)] hover:shadow-md active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          >
-            {visitLabel}
-            <ExternalLink className="size-4 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-          </a>
+          {hasLink ? (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/btn inline-flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-accent px-4 text-sm font-medium text-accent-foreground shadow-sm transition-all duration-200 ease-[var(--ease-out-expo)] hover:shadow-md active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
+              {label}
+              <ExternalLink className="size-4 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+            </a>
+          ) : (
+            <button
+              disabled
+              className="inline-flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-background-subtle border border-border px-4 text-sm font-medium text-foreground-muted cursor-not-allowed shadow-none"
+            >
+              {label}
+            </button>
+          )}
         </div>
       </div>
     </article>
@@ -210,7 +225,7 @@ export function Portfolio() {
                   title={t.portfolio.items[index].title}
                   description={t.portfolio.items[index].description}
                   categoryLabel={t.portfolio.categories[project.category]}
-                  visitLabel={t.portfolio.visit}
+                  buttonLabels={t.portfolio.buttonLabels}
                 />
               </m.div>
             ))}

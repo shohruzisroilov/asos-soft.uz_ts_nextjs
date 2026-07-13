@@ -88,7 +88,12 @@ export const en = {
     badge: "Our work",
     heading: "Selected projects we’re proud of",
     subheading: "Real digital products shipped to solve real business goals.",
-    visit: "Visit Website",
+    buttonLabels: {
+      web: "Visit Website",
+      app: "View App",
+      bot: "View Bot",
+      private: "Private System",
+    },
     categories: {
       All: "All",
       Web: "Web",
@@ -99,8 +104,8 @@ export const en = {
     },
     items: [
       {
-        title: "Northwind Commerce",
-        description: "Modern online store with fast storefront and inventory management.",
+        title: "Sam Travel",
+        description: "Modern and user-friendly tourism website for traveling across Europe and the world.",
       },
       {
         title: "Atlas CRM",
@@ -129,6 +134,16 @@ export const en = {
     badge: "Our stack",
     heading: "Technologies we build with",
     subheading: "A modern, battle-tested toolkit chosen for performance and reliability.",
+    groups: {
+      frontend: "Frontend",
+      backend: "Backend & APIs",
+      mobile: "Mobile Development",
+      bot: "Telegram Bots",
+      desktop: "Desktop Apps",
+      devops: "DevOps & Cloud",
+      database: "Databases & Storage",
+      design: "Design & Tools",
+    },
   },
 
   whyChoose: {

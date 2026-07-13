@@ -11,6 +11,7 @@ import { ThemeToggle } from "./theme-toggle";
 import { LanguageSwitcher } from "./language-switcher";
 import { useI18n, useLocalizedHref } from "@/providers/i18n-provider";
 import { cn } from "@/lib/utils";
+import { locales } from "@/i18n/config";
 
 const listVariants = {
   hidden: {},
@@ -25,11 +26,14 @@ const itemVariants = {
 export function MobileNav({
   open,
   onClose,
+  activeSection = "home",
 }: {
   open: boolean;
   onClose: () => void;
+  activeSection?: string;
 }) {
   const pathname = usePathname();
+  const isHome = pathname === "/" || locales.some((l) => pathname === `/${l}`);
   const { t } = useI18n();
   const localizedHref = useLocalizedHref();
 
@@ -94,7 +98,7 @@ export function MobileNav({
               animate="visible"
             >
               {mainNav.map((item) => {
-                const active = isActivePath(pathname, item.href);
+                const active = isHome ? activeSection === item.key : isActivePath(pathname, item.href);
                 return (
                   <m.li key={item.href} variants={itemVariants}>
                     <a
