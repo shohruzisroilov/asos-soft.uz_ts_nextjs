@@ -389,8 +389,8 @@ export const en = {
   },
 
   metadata: {
-    title: "AsosSoft — Software that moves your business forward",
+    title: "AsosSoft — Web Development, Mobile Apps & Telegram Bot Creation",
     description:
-      "AsosSoft is a premium software studio building high-performance web, mobile, and cloud products for ambitious companies.",
+      "AsosSoft is a premium software studio offering web development, mobile apps, CRM systems, and Telegram bot creation. High-performance IT solutions for business.",
   },
 };

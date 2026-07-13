@@ -49,24 +49,21 @@ export function validateContactForm(
 }
 
 /**
- * Submits the contact form.
- *
- * TODO(telegram): Wire this to the Telegram Bot API. The recommended shape is
- * a POST to a server route (e.g. `/api/contact`) that keeps the bot token
- * secret and calls `sendMessage`:
- *
- *   await fetch("/api/contact", {
- *     method: "POST",
- *     headers: { "Content-Type": "application/json" },
- *     body: JSON.stringify(values),
- *   });
- *
- * For now this is frontend-only and simulates a successful send.
+ * Submits the contact form to the secure API route.
  */
 export async function submitContactForm(
   values: ContactFormValues
 ): Promise<void> {
-  await new Promise((resolve) => setTimeout(resolve, 900));
-  // Placeholder until the Telegram integration is connected.
-  void values;
+  const response = await fetch("/api/contact", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(values),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error || "Xabar yuborishda xatolik yuz berdi");
+  }
 }

@@ -75,6 +75,7 @@ export function Contact() {
   const [errors, setErrors] = useState<ContactErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const contactDetails = [
     {
@@ -111,6 +112,7 @@ export function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(null);
     const nextErrors = validateContactForm(values, t.contact.errors);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
@@ -121,6 +123,10 @@ export function Contact() {
       setValues(emptyContactForm);
       setErrors({});
       setToastOpen(true);
+    } catch (error) {
+      console.error(error);
+      const message = error instanceof Error ? error.message : "Xabarni yuborishda xatolik yuz berdi.";
+      setSubmitError(message);
     } finally {
       setSubmitting(false);
     }
@@ -276,6 +282,12 @@ export function Contact() {
                   />
                 </Field>
               </div>
+
+              {submitError && (
+                <p className="mt-4 text-sm text-red-500 text-center font-medium">
+                  {submitError}
+                </p>
+              )}
 
               <Button
                 type="submit"

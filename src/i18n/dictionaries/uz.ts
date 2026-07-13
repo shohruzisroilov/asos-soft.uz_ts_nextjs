@@ -67,7 +67,7 @@ export const uz: Dictionary = {
           "iOS va Android tizimlari uchun mukammal ishlaydigan mobil ilovalar.",
       },
       {
-        title: "Telegram botlar",
+        title: "Telegram bot yaratish",
         description:
           "Biznes jarayonlarini avtomatlashtiruvchi aqlli Telegram botlar.",
       },
@@ -383,8 +383,8 @@ export const uz: Dictionary = {
   },
 
   metadata: {
-    title: "AsosSoft — Biznesingizni oldinga siljitadigan dasturiy ta’minot",
+    title: "AsosSoft — Professional Sayt Yaratish, Telegram Bot va Mobil Ilovalar",
     description:
-      "AsosSoft — premium dasturiy ta'minot studiyasi. Biz biznesingiz rivoji uchun yuqori samaradorlikka ega veb, mobil va bulutli tizimlar yaratamiz.",
+      "AsosSoft — O'zbekistonda professional sayt yaratish, telegram bot va mobil ilovalar ishlab chiqish xizmati. Biznesingizni avtomatlashtirish va sifatli IT yechimlar.",
   },
 };
