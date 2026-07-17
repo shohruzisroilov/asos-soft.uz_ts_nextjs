@@ -25,7 +25,7 @@ export function Hero() {
     >
       <AnimatedBackground />
 
-      <Container className="relative flex min-h-[92vh] flex-col items-center justify-center py-28 text-center">
+      <Container className="relative flex min-h-[92svh] flex-col items-center justify-center py-24 sm:py-28 text-center">
         <div className="flex flex-col items-center">
           {/* Eyebrow */}
           <div className="animate-fade-in-up" style={{ animationDelay: "0.05s" }}>

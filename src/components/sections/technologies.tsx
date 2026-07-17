@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { m, AnimatePresence, type Variants } from "framer-motion";
+import { m, type Variants } from "framer-motion";
 import { Container, Badge } from "@/components/ui";
 import { Reveal } from "@/components/shared";
-import { technologyGroups } from "@/data/technologies";
+import { technologyGroups, type Technology } from "@/data/technologies";
 import { useI18n } from "@/providers/i18n-provider";
-import { cn } from "@/lib/utils";
+import { viewportOnce } from "@/lib/motion";
 
 const gridContainer: Variants = {
   hidden: {},
@@ -23,17 +22,18 @@ const tileVariant: Variants = {
   },
 };
 
-const panelVariant: Variants = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] } },
-  exit: { opacity: 0, y: -6, transition: { duration: 0.2 } },
-};
+const allTechnologies: Technology[] = Array.from(
+  technologyGroups
+    .flatMap((group) => group.technologies)
+    .reduce((map, tech) => {
+      if (!map.has(tech.name)) map.set(tech.name, tech);
+      return map;
+    }, new Map<string, Technology>())
+    .values()
+);
 
 export function Technologies() {
   const { t } = useI18n();
-  const [activeKey, setActiveKey] = useState(technologyGroups[0].key);
-
-  const activeGroup = technologyGroups.find((g) => g.key === activeKey)!;
 
   return (
     <section
@@ -64,77 +64,28 @@ export function Technologies() {
           </Reveal>
         </div>
 
-        {/* Tab bar */}
-        <Reveal delay={0.2}>
-          <div
-            role="tablist"
-            aria-label="Technology categories"
-            className="mt-12 flex flex-wrap justify-center gap-2"
-          >
-            {technologyGroups.map((group) => {
-              const label = t.technologies.groups[group.key as keyof typeof t.technologies.groups];
-              const isActive = group.key === activeKey;
-              return (
-                <button
-                  key={group.key}
-                  role="tab"
-                  aria-selected={isActive}
-                  aria-controls="tech-panel"
-                  onClick={() => setActiveKey(group.key)}
-                  className={cn(
-                    "relative rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                    isActive
-                      ? "text-accent-foreground"
-                      : "text-foreground-muted hover:text-foreground"
-                  )}
-                >
-                  {isActive && (
-                    <m.span
-                      layoutId="tech-tab-bg"
-                      className="absolute inset-0 rounded-full bg-accent"
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                      aria-hidden
-                    />
-                  )}
-                  <span className="relative">{label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </Reveal>
-
-        {/* Tech grid panel */}
-        <div
-          id="tech-panel"
-          role="tabpanel"
-          aria-label={t.technologies.groups[activeKey as keyof typeof t.technologies.groups]}
-          className="mt-10 min-h-[200px]"
+        {/* Tech grid */}
+        <m.ul
+          variants={gridContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 sm:gap-4"
         >
-          <AnimatePresence mode="wait">
-            <m.ul
-              key={activeKey}
-              variants={gridContainer}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 sm:gap-4"
-            >
-              {activeGroup.technologies.map(({ name, Icon }) => (
-                <m.li key={name} variants={tileVariant}>
-                  <div className="group flex h-full flex-col items-center justify-center gap-3 rounded-2xl border border-border bg-surface px-4 py-8 transition-all duration-300 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-foreground/20 hover:shadow-md">
-                    <Icon
-                      className="size-9 text-foreground-muted transition-all duration-300 ease-[var(--ease-out-expo)] group-hover:scale-110 group-hover:text-foreground"
-                      aria-hidden
-                    />
-                    <span className="text-center text-xs font-medium text-foreground-muted transition-colors duration-300 group-hover:text-foreground">
-                      {name}
-                    </span>
-                  </div>
-                </m.li>
-              ))}
-            </m.ul>
-          </AnimatePresence>
-        </div>
+          {allTechnologies.map(({ name, Icon }) => (
+            <m.li key={name} variants={tileVariant}>
+              <div className="group flex h-full flex-col items-center justify-center gap-3 rounded-2xl border border-border bg-surface px-4 py-8 transition-all duration-300 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-foreground/20 hover:shadow-md">
+                <Icon
+                  className="size-9 text-foreground-muted transition-all duration-300 ease-[var(--ease-out-expo)] group-hover:scale-110 group-hover:text-foreground"
+                  aria-hidden
+                />
+                <span className="text-center text-xs font-medium text-foreground-muted transition-colors duration-300 group-hover:text-foreground">
+                  {name}
+                </span>
+              </div>
+            </m.li>
+          ))}
+        </m.ul>
       </Container>
     </section>
   );
