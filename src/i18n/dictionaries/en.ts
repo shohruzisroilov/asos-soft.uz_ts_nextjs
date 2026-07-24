@@ -104,16 +104,16 @@ export const en = {
     },
     items: [
       {
+        title: "Qo'rg'on Dostavka",
+        description: "Fast and convenient delivery service from local neighborhood stores.",
+      },
+      {
         title: "Sam Travel",
         description: "Modern and user-friendly tourism website for traveling across Europe and the world.",
       },
       {
         title: "Atlas CRM",
         description: "Modern CRM that unifies sales pipeline and contact management.",
-      },
-      {
-        title: "Pulse Fitness",
-        description: "Cross-platform mobile application for fitness tracking and workout plans.",
       },
       {
         title: "Lumen AI",
@@ -404,8 +404,8 @@ export const en = {
   },
 
   metadata: {
-    title: "AsosSoft — Web Development, Mobile Apps & Telegram Bot Creation",
+    title: "Asos Soft — Web Development, Mobile Apps & Telegram Bot Creation",
     description:
-      "AsosSoft is a premium software studio offering web development, mobile apps, CRM systems, and Telegram bot creation. High-performance IT solutions for business.",
+      "Asos Soft (AsosSoft) is a premium digital product studio in Tashkent, Uzbekistan offering web development, mobile apps, CRM systems, and Telegram bot creation.",
   },
 };

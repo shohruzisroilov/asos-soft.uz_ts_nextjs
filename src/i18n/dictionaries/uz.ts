@@ -81,7 +81,7 @@ export const uz: Dictionary = {
 
   portfolio: {
     badge: "Bizning ishlar",
-    heading: "Biz amalga oshirgan tanlangan loyihalar",
+    heading: "Biz amalga oshirgan oxirgi ishlarimiz",
     subheading: "Biznesingiz uchun yaratilgan real raqamli mahsulotlar.",
     buttonLabels: {
       web: "Saytga o‘tish",
@@ -99,16 +99,16 @@ export const uz: Dictionary = {
     },
     items: [
       {
+        title: "Qo'rg'on Dostavka",
+        description: "Mahallangizdagi do‘konlardan tez va qulay yetkazib berish xizmati.",
+      },
+      {
         title: "Sam Travel",
         description: "Evropa va butun dunyo bo'ylab sayohatlar uchun zamonaviy va qulay turizm sayti.",
       },
       {
         title: "Atlas CRM",
         description: "Savdo va mijozlar boshqaruvini birlashtiruvchi qulay CRM tizimi.",
-      },
-      {
-        title: "Pulse Fitness",
-        description: "Mashg'ulotlar va natijalarni kuzatib boruvchi mobil ilova.",
       },
       {
         title: "Lumen AI",
@@ -398,8 +398,8 @@ export const uz: Dictionary = {
   },
 
   metadata: {
-    title: "AsosSoft — Professional Sayt Yaratish, Telegram Bot va Mobil Ilovalar",
+    title: "Asos Soft — Professional Sayt Yaratish, Telegram Bot va Mobil Ilovalar",
     description:
-      "AsosSoft — O'zbekistonda professional sayt yaratish, telegram bot va mobil ilovalar ishlab chiqish xizmati. Biznesingizni avtomatlashtirish va sifatli IT yechimlar.",
+      "Asos Soft (AsosSoft) — Toshkent va O'zbekistonda professional sayt yaratish, telegram bot, mobil ilovalar hamda CRM tizimlar ishlab chiqish xizmati. Biznesingizni avtomatlashtiruvchi premium IT studio.",
   },
 };

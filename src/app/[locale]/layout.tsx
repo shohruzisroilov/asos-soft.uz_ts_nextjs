@@ -53,6 +53,14 @@ export async function generateMetadata({
   return {
     metadataBase: new URL(siteConfig.url),
     manifest: "/manifest.webmanifest",
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/icon.png", type: "image/png" },
+      ],
+      shortcut: "/favicon.ico",
+      apple: "/apple-icon.png",
+    },
     title: {
       default: dict.metadata.title,
       template: `%s · ${siteConfig.name}`,

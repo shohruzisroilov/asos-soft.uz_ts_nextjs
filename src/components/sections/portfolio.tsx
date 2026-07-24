@@ -21,10 +21,8 @@ function ProjectCover({
   project: ProjectMeta;
   categoryLabel: string;
 }) {
-  const { icon: Icon } = project;
-
   return (
-    <div className="relative aspect-[4/3] overflow-hidden bg-background-subtle">
+    <div className="relative aspect-square overflow-hidden bg-background-subtle">
       {/* Real product image */}
       <img
         src={project.image}
@@ -47,13 +45,6 @@ function ProjectCover({
         <Badge variant="glass" size="sm">
           {categoryLabel}
         </Badge>
-      </div>
-
-      {/* Centered mark that scales on hover */}
-      <div className="absolute inset-0 flex items-center justify-center z-10">
-        <span className="flex size-16 items-center justify-center rounded-2xl border border-white/10 bg-black/40 text-white shadow-lg backdrop-blur-md transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-110">
-          <Icon className="size-7" strokeWidth={1.75} aria-hidden />
-        </span>
       </div>
     </div>
   );

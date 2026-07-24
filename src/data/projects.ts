@@ -1,10 +1,10 @@
 import {
   Users,
-  Dumbbell,
   Sparkles,
   Building2,
   Truck,
   Compass,
+  ShoppingBag,
   type LucideIcon,
 } from "lucide-react";
 
@@ -27,13 +27,23 @@ export interface ProjectMeta {
 
 export const projects: ProjectMeta[] = [
   {
+    slug: "qorgon-dostavka",
+    category: "E-commerce",
+    technologies: ["Telegram Bot", "Node.js", "TypeScript", "PostgreSQL"],
+    liveUrl: "https://t.me/qorgon_dostavka_bot",
+    githubUrl: "https://github.com",
+    icon: ShoppingBag,
+    image: "/projects/qorgon-dostavka.png",
+    type: "bot",
+  },
+  {
     slug: "sam-travel",
     category: "Web",
     technologies: ["Next.js", "Tailwind CSS", "Framer Motion", "i18next"],
     liveUrl: "https://sam-travel.uz",
     githubUrl: "https://github.com",
     icon: Compass,
-    image: "/projects/sam-travel.png",
+    image: "/projects/sam-travel.jpg",
     type: "web",
   },
   {
@@ -43,16 +53,6 @@ export const projects: ProjectMeta[] = [
     githubUrl: "https://github.com",
     icon: Users,
     image: "/projects/atlas-crm.png",
-  },
-  {
-    slug: "pulse-fitness",
-    category: "Mobile",
-    technologies: ["React Native", "Expo", "Firebase"],
-    liveUrl: "https://play.google.com/store/apps",
-    githubUrl: "https://github.com",
-    icon: Dumbbell,
-    image: "/projects/pulse-fitness.png",
-    type: "app",
   },
   {
     slug: "lumen-ai",
