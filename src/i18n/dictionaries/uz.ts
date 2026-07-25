@@ -15,7 +15,7 @@ export const uz: Dictionary = {
   },
 
   hero: {
-    eyebrow: "Bizneslar uchun IT-studiya",
+    eyebrow: "Bizneslar uchun IT-kompaniya",
     headline: "Biznesingiz uchun professional dasturiy yechimlar",
     subheadlineBefore: "AsosSoft ",
     subheadlineHighlight:
@@ -100,27 +100,33 @@ export const uz: Dictionary = {
     items: [
       {
         title: "Qo'rg'on Dostavka",
-        description: "Mahallangizdagi do‘konlardan tez va qulay yetkazib berish xizmati.",
+        description:
+          "Mahalliy yetkazib berish jarayonini avtomatlashtiring — Mahallangizdagi do'konlar va mijozlarni tezkor buyurtmalar hamda qulay yetkazib berish orqali birlashtiruvchi Telegram Mini App platformasi.",
       },
       {
         title: "Sam Travel",
-        description: "Evropa va butun dunyo bo'ylab sayohatlar uchun zamonaviy va qulay turizm sayti.",
+        description:
+          "Sam Travel kompaniyasi uchun ishonchli va zamonaviy korporativ veb-sayt. Kompaniyaning xizmatlarini professional tarzda namoyish etish va mijozlar bilan samarali aloqa o'rnatish uchun ishlab chiqilgan.",
       },
       {
         title: "Atlas CRM",
-        description: "Savdo va mijozlar boshqaruvini birlashtiruvchi qulay CRM tizimi.",
+        description:
+          "Mijozlar bilan ishlashni yangi bosqichga olib chiqing — Sotuvlarni nazorat qilish, mijozlar bilan munosabatlarni mustahkamlash va biznes samaradorligini oshirish uchun yaratilgan CRM tizimi.",
       },
       {
         title: "Lumen AI",
-        description: "Hujjatlar va ichki ma'lumotlar bilan ishlovchi aqlli AI assistent.",
+        description:
+          "Ma'lumotlaringizni aqlli yordamchiga aylantiring — Ichki hujjatlar bilan ishlashni avtomatlashtirib, ish jarayonlarini tezlashtiruvchi sun'iy intellekt yechimi.",
       },
       {
         title: "Vertex ERP",
-        description: "Moliya, ombor va HR operatsiyalarini boshqarish tizimi.",
+        description:
+          "Biznes jarayonlarini yagona tizimda boshqaring — Moliya, ombor, HR va operatsion faoliyatni bir platformada birlashtiruvchi ERP tizimi.",
       },
       {
         title: "Cargo Logistics",
-        description: "Yuklarni real vaqtda kuzatib boruvchi logistika boshqaruv paneli.",
+        description:
+          "Har bir yukni real vaqt rejimida nazorat qiling — Yuk tashish jarayonlarini kuzatish, boshqarish va logistika samaradorligini oshirish uchun yaratilgan boshqaruv platformasi.",
       },
     ],
   },
@@ -183,36 +189,36 @@ export const uz: Dictionary = {
 
   process: {
     badge: "Qanday ishlaymiz?",
-    heading: "Dastur yaratishdagi ish jarayonimiz",
+    heading: "Dastur yaratish jarayonimiz",
     subheading: "Muzokaralardan tortib loyihani topshirishgacha bo'lgan shaffof yo'l.",
     items: [
       {
         title: "Talablarni tahlil qilish",
-        description: "Biznesingiz maqsad va talablarini o'rganamiz.",
+        description: "Biznesingizning maqsad va talablarini o'rganamiz.",
       },
       {
         title: "Rejalashtirish",
         description: "Loyiha bosqichlari va muddatlarini belgilaymiz.",
       },
       {
-        title: "UI/UX dizayn",
-        description: "Loyiha dizayni va interaktiv prototipini chizamiz.",
+        title: "UI/UX dizayni",
+        description: "Loyiha dizaynini va interaktiv prototipini ishlab chiqamiz.",
       },
       {
-        title: "Ishlab chiqish",
-        description: "Dastur kodini toza va xalqaro standartlarda yozamiz.",
+        title: "Dasturlash",
+        description: "Dastur kodini toza va xalqaro standartlarga muvofiq yozamiz.",
       },
       {
         title: "Testlash",
-        description: "Tezlik, xavfsizlik va xatoliklarni to'liq tekshiramiz.",
+        description: "Tezlik, xavfsizlik va xatolarni to'liq tekshiramiz.",
       },
       {
         title: "Ishga tushirish",
-        description: "Tizimni serverga joylab, to'liq ishga tushiramiz.",
+        description: "Tizimni serverga joylashtirib, to'liq ishga tushiramiz.",
       },
       {
-        title: "Doimiy nazorat",
-        description: "Loyihangiz uzluksiz ishlashini kafolatlaymiz.",
+        title: "Doimiy monitoring",
+        description: "Loyihangizning uzluksiz ishlashini kafolatlaymiz.",
       },
     ],
   },
@@ -379,7 +385,7 @@ export const uz: Dictionary = {
   footer: {
     ready: "Loyihangizni boshlashga tayyormisiz?",
     getQuote: "Bepul taklif oling →",
-    description: "AsosSoft — biznesingiz uchun yuqori samaradorlikka ega premium dasturiy yechimlar yaratuvchi IT-studiya.",
+    description: "AsosSoft — biznesingiz uchun yuqori samaradorlikka ega premium dasturiy yechimlar yaratuvchi IT-kompaniya.",
     quickLinks: "Tezkor havolalar",
     servicesTitle: "Xizmatlar",
     servicesLinks: [
@@ -400,6 +406,6 @@ export const uz: Dictionary = {
   metadata: {
     title: "Asos Soft — Professional Sayt Yaratish, Telegram Bot va Mobil Ilovalar",
     description:
-      "Asos Soft (AsosSoft) — Toshkent va O'zbekistonda professional sayt yaratish, telegram bot, mobil ilovalar hamda CRM tizimlar ishlab chiqish xizmati. Biznesingizni avtomatlashtiruvchi premium IT studio.",
+      "Asos Soft (AsosSoft) — Toshkent va O'zbekistonda professional sayt yaratish, telegram bot, mobil ilovalar hamda CRM tizimlar ishlab chiqish xizmati. Biznesingizni avtomatlashtiruvchi premium IT-kompaniya.",
   },
 };

@@ -20,7 +20,7 @@ export const en = {
   },
 
   hero: {
-    eyebrow: "Digital product studio for businesses",
+    eyebrow: "IT company for businesses",
     headline: "Professional Software Solutions for Your Business",
     subheadlineBefore: "AsosSoft designs and develops ",
     subheadlineHighlight:
@@ -105,27 +105,33 @@ export const en = {
     items: [
       {
         title: "Qo'rg'on Dostavka",
-        description: "Fast and convenient delivery service from local neighborhood stores.",
+        description:
+          "Automate local delivery — Telegram Mini App platform connecting neighborhood stores and customers with fast ordering and delivery.",
       },
       {
         title: "Sam Travel",
-        description: "Modern and user-friendly tourism website for traveling across Europe and the world.",
+        description:
+          "Reliable and modern corporate website for Sam Travel. Built to showcase company services professionally and establish effective client relationships.",
       },
       {
         title: "Atlas CRM",
-        description: "Modern CRM that unifies sales pipeline and contact management.",
+        description:
+          "Take customer relationships to the next level — Custom CRM built to control sales, strengthen client relationships, and boost business efficiency.",
       },
       {
         title: "Lumen AI",
-        description: "AI-powered knowledge assistant answering queries based on private data.",
+        description:
+          "Turn your data into an intelligent assistant — AI solution automating document workflows and accelerating business processes.",
       },
       {
         title: "Vertex ERP",
-        description: "Corporate ERP system connecting finance, HR, and operations.",
+        description:
+          "Manage business processes in a single system — ERP system connecting finance, warehouse, HR, and operations into one platform.",
       },
       {
         title: "Cargo Logistics",
-        description: "Logistics tracking panel with live map and route optimization.",
+        description:
+          "Track every shipment in real time — Management platform built to monitor freight, manage logistics, and boost efficiency.",
       },
     ],
   },
@@ -385,7 +391,7 @@ export const en = {
   footer: {
     ready: "Ready to start your project?",
     getQuote: "Get a free quote →",
-    description: "AsosSoft is a premium software studio building high-performance digital products for businesses.",
+    description: "AsosSoft is a premium IT company building high-performance digital products for businesses.",
     quickLinks: "Quick Links",
     servicesTitle: "Services",
     servicesLinks: [
@@ -406,6 +412,6 @@ export const en = {
   metadata: {
     title: "Asos Soft — Web Development, Mobile Apps & Telegram Bot Creation",
     description:
-      "Asos Soft (AsosSoft) is a premium digital product studio in Tashkent, Uzbekistan offering web development, mobile apps, CRM systems, and Telegram bot creation.",
+      "Asos Soft (AsosSoft) is a premium IT company in Tashkent, Uzbekistan offering web development, mobile apps, CRM systems, and Telegram bot creation.",
   },
 };
