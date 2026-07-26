@@ -34,3 +34,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# claude skills (python script artifacts + generated design-system output)
+__pycache__/
+*.pyc
+.claude/skills/ui-ux-pro-max/design-system/
