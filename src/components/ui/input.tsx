@@ -23,7 +23,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           "disabled:cursor-not-allowed disabled:opacity-50",
           "file:border-0 file:bg-transparent file:text-sm file:font-medium",
           invalid
-            ? "border-red-500/60 focus-visible:ring-red-500/50"
+            ? "border-danger/60 focus-visible:ring-danger/50"
             : "border-border hover:border-foreground/20",
           leftIcon && "pl-11",
           className

@@ -130,7 +130,7 @@ export function Testimonials() {
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
             aria-roledescription="carousel"
-            aria-label="Customer testimonials"
+            aria-label={t.testimonials.region}
           >
             <div className="overflow-hidden px-1 pb-1">
               <AnimatePresence mode="wait" custom={direction} initial={false}>
@@ -157,7 +157,7 @@ export function Testimonials() {
               <button
                 type="button"
                 onClick={() => paginate(-1)}
-                aria-label="Previous testimonial"
+                aria-label={t.testimonials.prev}
                 className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-surface text-foreground shadow-xs transition-all duration-200 ease-[var(--ease-out-expo)] hover:-translate-y-0.5 hover:border-foreground/25 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 <ChevronLeft className="size-5" />
@@ -185,7 +185,7 @@ export function Testimonials() {
               <button
                 type="button"
                 onClick={() => paginate(1)}
-                aria-label="Next testimonial"
+                aria-label={t.testimonials.next}
                 className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-surface text-foreground shadow-xs transition-all duration-200 ease-[var(--ease-out-expo)] hover:-translate-y-0.5 hover:border-foreground/25 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 <ChevronRight className="size-5" />

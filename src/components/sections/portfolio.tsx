@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, m } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { Container, Badge } from "@/components/ui";
@@ -17,18 +18,22 @@ import { cn } from "@/lib/utils";
 function ProjectCover({
   project,
   categoryLabel,
+  title,
 }: {
   project: ProjectMeta;
   categoryLabel: string;
+  title: string;
 }) {
   return (
     <div className="relative aspect-square overflow-hidden bg-background-subtle">
-      {/* Real product image */}
-      <img
+      {/* Real product image. The translated title is the alt text — the slug
+          it used to carry is an identifier, not a description. */}
+      <Image
         src={project.image}
-        alt={project.slug}
-        className="h-full w-full object-cover object-center transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-105"
-        loading="lazy"
+        alt={`${title} — ${categoryLabel}`}
+        fill
+        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+        className="object-cover object-center transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-105"
       />
       {/* Semi-transparent dark overlay on hover to keep controls/badge readable */}
       <div className="absolute inset-0 bg-black/5 transition-colors duration-300 group-hover:bg-black/20" />
@@ -82,7 +87,7 @@ function ProjectCard({
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-all duration-300 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-foreground/20 hover:shadow-lg">
-      <ProjectCover project={project} categoryLabel={categoryLabel} />
+      <ProjectCover project={project} categoryLabel={categoryLabel} title={title} />
 
       <div className="flex flex-1 flex-col p-6">
         <h3 className="text-lg font-semibold tracking-tight text-foreground">
@@ -161,7 +166,7 @@ export function Portfolio() {
         <Reveal delay={0.2}>
           <div
             role="tablist"
-            aria-label="Filter projects by category"
+            aria-label={t.portfolio.filterLabel}
             className="mt-12 flex flex-wrap items-center justify-center gap-2"
           >
             {projectCategories.map((category) => {

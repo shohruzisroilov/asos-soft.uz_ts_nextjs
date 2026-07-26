@@ -100,7 +100,7 @@ export function Navbar() {
             {/* Desktop nav — animated hover pill + sliding active indicator */}
             <nav
               className="relative hidden items-center lg:flex"
-              aria-label="Primary"
+              aria-label={t.nav.primaryNav}
               onMouseLeave={() => setHovered(null)}
             >
               {mainNav.map((item) => {
@@ -177,8 +177,9 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={() => setMenuOpen(true)}
-                aria-label="Open menu"
+                aria-label={menuOpen ? t.nav.closeMenu : t.nav.openMenu}
                 aria-expanded={menuOpen}
+                aria-controls="mobile-nav"
                 className="inline-flex size-10 items-center justify-center rounded-xl border border-border bg-surface text-foreground shadow-xs transition-all duration-200 hover:bg-background-subtle hover:border-foreground/20 active:scale-95 lg:hidden"
               >
                 <Menu className="size-5" />

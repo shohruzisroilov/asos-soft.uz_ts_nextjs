@@ -35,6 +35,23 @@ export function Field({
       ? `${htmlFor}-hint`
       : undefined;
 
+  // aria-describedby only works on the control itself — on a wrapper it is
+  // ignored, so the message never reaches screen readers. Clone it onto the
+  // child instead, preserving any value the caller already set. `required`
+  // rides along because the asterisk in the label is aria-hidden.
+  const control = React.isValidElement<{
+    "aria-describedby"?: string;
+    required?: boolean;
+  }>(children)
+    ? React.cloneElement(children, {
+        "aria-describedby":
+          [children.props["aria-describedby"], describedBy]
+            .filter(Boolean)
+            .join(" ") || undefined,
+        required: children.props.required ?? required,
+      })
+    : children;
+
   return (
     <div className={cn("flex flex-col gap-2", className)} {...props}>
       {label && (
@@ -42,9 +59,9 @@ export function Field({
           {label}
         </Label>
       )}
-      <div aria-describedby={describedBy}>{children}</div>
+      {control}
       {error ? (
-        <p id={`${htmlFor}-error`} className="text-xs text-red-500">
+        <p id={`${htmlFor}-error`} role="alert" className="text-xs text-danger">
           {error}
         </p>
       ) : hint ? (

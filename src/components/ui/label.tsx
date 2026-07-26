@@ -18,7 +18,13 @@ export const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
       {...props}
     >
       {children}
-      {required && <span className="ml-0.5 text-red-500">*</span>}
+      {/* Decorative — the control carries the real `required` semantics, so
+          reading "star" out loud would just be noise. */}
+      {required && (
+        <span aria-hidden="true" className="ml-0.5 text-danger">
+          *
+        </span>
+      )}
     </label>
   )
 );

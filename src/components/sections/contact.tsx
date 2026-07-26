@@ -23,6 +23,15 @@ import {
   type ContactErrors,
 } from "@/lib/contact";
 
+/** Visual top-to-bottom order of the form fields, used for error focus. */
+const FIELD_ORDER: (keyof ContactFormValues)[] = [
+  "fullName",
+  "phone",
+  "email",
+  "service",
+  "message",
+];
+
 function SuccessToast({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { t } = useI18n();
 
@@ -58,7 +67,7 @@ function SuccessToast({ open, onClose }: { open: boolean; onClose: () => void })
           <button
             type="button"
             onClick={onClose}
-            aria-label="Dismiss notification"
+            aria-label={t.contact.errors.dismiss}
             className="text-foreground-subtle transition-colors hover:text-foreground"
           >
             <X className="size-4" />
@@ -115,7 +124,15 @@ export function Contact() {
     setSubmitError(null);
     const nextErrors = validateContactForm(values, t.contact.errors);
     setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) return;
+    if (Object.keys(nextErrors).length > 0) {
+      // Send the user straight to the problem instead of leaving them to
+      // hunt for it — matters most for keyboard and screen-reader users.
+      // Walked in visual order so focus lands on the topmost error, not
+      // whichever key the validator happened to write first.
+      const firstInvalid = FIELD_ORDER.find((name) => nextErrors[name]);
+      if (firstInvalid) document.getElementById(firstInvalid)?.focus();
+      return;
+    }
 
     try {
       setSubmitting(true);
@@ -125,7 +142,8 @@ export function Contact() {
       setToastOpen(true);
     } catch (error) {
       console.error(error);
-      const message = error instanceof Error ? error.message : "Xabarni yuborishda xatolik yuz berdi.";
+      const message =
+        error instanceof Error ? error.message : t.contact.errors.submitFailed;
       setSubmitError(message);
     } finally {
       setSubmitting(false);
@@ -284,7 +302,10 @@ export function Contact() {
               </div>
 
               {submitError && (
-                <p className="mt-4 text-sm text-red-500 text-center font-medium">
+                <p
+                  role="alert"
+                  className="mt-4 text-center text-sm font-medium text-danger"
+                >
                   {submitError}
                 </p>
               )}

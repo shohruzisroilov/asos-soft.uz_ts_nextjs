@@ -73,7 +73,8 @@ export function MobileNav({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -16, scale: 0.98 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            aria-label="Mobile"
+            id="mobile-nav"
+            aria-label={t.nav.menu}
           >
             <div className="flex items-center justify-between">
               <Logo href={localizedHref("/")} />
@@ -83,7 +84,7 @@ export function MobileNav({
                 <button
                   type="button"
                   onClick={onClose}
-                  aria-label="Close menu"
+                  aria-label={t.nav.closeMenu}
                   className="inline-flex size-10 items-center justify-center rounded-xl border border-border bg-surface text-foreground shadow-xs transition-all duration-200 ease-[var(--ease-out-expo)] hover:bg-background-subtle hover:border-foreground/20 active:scale-95"
                 >
                   <X className="size-5" />

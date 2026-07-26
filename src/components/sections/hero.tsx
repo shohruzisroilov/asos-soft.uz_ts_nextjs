@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils";
  * The hero's primary content uses CSS entrance animations (not JS) so the
  * LCP heading paints on first paint and is never gated behind hydration.
  * The global prefers-reduced-motion rule disables these automatically.
- * The global prefers-reduced-motion rule disables these automatically.
  */
 export function Hero() {
   const { t } = useI18n();
@@ -85,14 +84,17 @@ export function Hero() {
             {heroStats.map((stat, i) => (
               <div
                 key={i}
-                className="rounded-2xl border border-border bg-surface/60 p-5 backdrop-blur-sm transition-colors duration-300 hover:border-foreground/20"
+                className="flex flex-col rounded-2xl border border-border bg-surface/60 p-5 backdrop-blur-sm transition-colors duration-300 hover:border-foreground/20"
               >
-                <dd className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                  <CountUp value={stat.value} suffix={stat.suffix} />
-                </dd>
-                <dt className="mt-1.5 text-xs text-foreground-muted sm:text-sm">
+                {/* <dt> before <dd> — required order, and it makes screen
+                    readers announce the label with its number. Visually
+                    reordered so the figure still reads first. */}
+                <dt className="order-2 mt-1.5 text-xs text-foreground-muted sm:text-sm">
                   {t.hero.stats[i]}
                 </dt>
+                <dd className="order-1 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                  <CountUp value={stat.value} suffix={stat.suffix} />
+                </dd>
               </div>
             ))}
           </dl>

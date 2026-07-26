@@ -12,6 +12,11 @@ export const uz: Dictionary = {
     contact: "Aloqa",
     cta: "Bog‘lanish",
     language: "Til",
+    primaryNav: "Asosiy",
+    menu: "Menyu",
+    skipToContent: "Asosiy qismga o‘tish",
+    openMenu: "Menyuni ochish",
+    closeMenu: "Menyuni yopish",
   },
 
   hero: {
@@ -80,6 +85,7 @@ export const uz: Dictionary = {
   },
 
   portfolio: {
+    filterLabel: "Loyihalarni turkum bo‘yicha filtrlash",
     badge: "Bizning ishlar",
     heading: "Biz amalga oshirgan oxirgi ishlarimiz",
     subheading: "Biznesingiz uchun yaratilgan real raqamli mahsulotlar.",
@@ -289,6 +295,9 @@ export const uz: Dictionary = {
   },
 
   testimonials: {
+    region: "Mijozlar fikrlari",
+    prev: "Oldingi fikr",
+    next: "Keyingi fikr",
     badge: "Mijozlar fikri",
     heading: "Biz bilan ishlagan jamoalar fikri",
     subheading: "Mijozlarimiz hamkorligimiz haqida qanday fikrda ekanliklarini bilib oling.",
@@ -379,6 +388,8 @@ export const uz: Dictionary = {
       budgetRequired: "Iltimos, byudjet oralig‘ini tanlang.",
       messageRequired: "Iltimos, loyihangiz haqida yozing.",
       messageShort: "Iltimos, biroz batafsilroq yozing (kamida 10 ta belgi).",
+      dismiss: "Bildirishnomani yopish",
+      submitFailed: "Xabarni yuborishda xatolik yuz berdi. Iltimos, qayta urinib ko‘ring.",
     },
   },
 

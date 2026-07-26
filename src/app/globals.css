@@ -29,6 +29,11 @@
   --accent: #0a0a0a;
   --accent-foreground: #ffffff;
 
+  /* Semantic state — the only non-monochrome hue, reserved for errors.
+     red-600 rather than red-500: 4.83:1 on white vs 3.76:1, so the 12px
+     error text still clears WCAG AA. */
+  --danger: #dc2626;
+
   /* Interactive */
   --ring: #0a0a0a;
 
@@ -60,13 +65,18 @@
 
   --foreground: #fafafa;
   --foreground-muted: #a1a1aa;
-  --foreground-subtle: #71717a;
+  /* Lightened from #71717a, which only reached 3.87:1 on --surface and so
+     failed AA for the 12px labels that use it. Still dimmer than -muted. */
+  --foreground-subtle: #8e8e99;
 
   --border: #26262a;
   --border-subtle: #1c1c20;
 
   --accent: #fafafa;
   --accent-foreground: #0a0a0a;
+
+  /* red-400: red-600 is too dark to read on --surface in dark mode. */
+  --danger: #f87171;
 
   --ring: #fafafa;
 
@@ -100,6 +110,8 @@
 
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+
+  --color-danger: var(--danger);
 
   --color-ring: var(--ring);
 

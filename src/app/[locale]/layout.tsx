@@ -141,7 +141,7 @@ export default async function LocaleLayout({
           href="#main-content"
           className="sr-only rounded-lg focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-accent-foreground focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
         >
-          Skip to content
+          {dict.nav.skipToContent}
         </a>
 
         <ThemeProvider

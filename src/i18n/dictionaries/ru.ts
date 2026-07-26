@@ -12,6 +12,11 @@ export const ru: Dictionary = {
     contact: "Контакты",
     cta: "Связаться",
     language: "Язык",
+    primaryNav: "Основная",
+    menu: "Меню",
+    skipToContent: "Перейти к содержимому",
+    openMenu: "Открыть меню",
+    closeMenu: "Закрыть меню",
   },
 
   hero: {
@@ -80,6 +85,7 @@ export const ru: Dictionary = {
   },
 
   portfolio: {
+    filterLabel: "Фильтровать проекты по категории",
     badge: "Наши работы",
     heading: "Избранные проекты, которыми мы гордимся",
     subheading: "Реальные цифровые продукты для решения конкретных задач вашего бизнеса.",
@@ -290,6 +296,9 @@ export const ru: Dictionary = {
   },
 
   testimonials: {
+    region: "Отзывы клиентов",
+    prev: "Предыдущий отзыв",
+    next: "Следующий отзыв",
     badge: "Отзывы",
     heading: "Нас любят команды, с которыми мы работали",
     subheading: "Не верьте нам на слово — вот что говорят наши клиенты.",
@@ -380,6 +389,8 @@ export const ru: Dictionary = {
       budgetRequired: "Пожалуйста, выберите диапазон бюджета.",
       messageRequired: "Пожалуйста, расскажите о проекте.",
       messageShort: "Добавьте немного деталей (не менее 10 символов).",
+      dismiss: "Закрыть уведомление",
+      submitFailed: "Не удалось отправить сообщение. Пожалуйста, попробуйте ещё раз.",
     },
   },
 

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { m, type Variants } from "framer-motion";
 import { Container, Badge } from "@/components/ui";
 import { Reveal } from "@/components/shared";
@@ -38,11 +39,12 @@ function ServiceCard({ image, title, description }: ServiceCardProps) {
       >
         {/* Service illustration cover */}
         <div className="relative aspect-[4/3] overflow-hidden bg-background-subtle">
-          <img
+          <Image
             src={image}
             alt={title}
-            className="h-full w-full object-cover object-center transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-105"
-            loading="lazy"
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover object-center transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-black/[0.02] transition-colors duration-300 group-hover:bg-black/[0.08]" />
         </div>

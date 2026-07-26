@@ -17,6 +17,11 @@ export const en = {
     contact: "Contact",
     cta: "Get in touch",
     language: "Language",
+    primaryNav: "Primary",
+    menu: "Menu",
+    skipToContent: "Skip to content",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
   },
 
   hero: {
@@ -85,6 +90,7 @@ export const en = {
   },
 
   portfolio: {
+    filterLabel: "Filter projects by category",
     badge: "Our work",
     heading: "Selected projects we’re proud of",
     subheading: "Real digital products shipped to solve real business goals.",
@@ -295,6 +301,9 @@ export const en = {
   },
 
   testimonials: {
+    region: "Customer testimonials",
+    prev: "Previous testimonial",
+    next: "Next testimonial",
     badge: "Testimonials",
     heading: "Loved by teams we’ve built with",
     subheading: "Don’t just take our word for it — here’s what our clients say.",
@@ -385,6 +394,8 @@ export const en = {
       budgetRequired: "Please select a budget range.",
       messageRequired: "Please tell us about your project.",
       messageShort: "Please add a little more detail (at least 10 characters).",
+      dismiss: "Dismiss notification",
+      submitFailed: "Something went wrong while sending your message. Please try again.",
     },
   },
 

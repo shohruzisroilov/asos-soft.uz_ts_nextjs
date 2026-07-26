@@ -19,7 +19,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background",
         "disabled:cursor-not-allowed disabled:opacity-50",
         invalid
-          ? "border-red-500/60 focus-visible:ring-red-500/50"
+          ? "border-danger/60 focus-visible:ring-danger/50"
           : "border-border hover:border-foreground/20",
         className
       )}

@@ -1,7 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { animate, useInView, useReducedMotion } from "framer-motion";
+
+/** useLayoutEffect warns during SSR, where there is no layout to read. */
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 export interface CountUpProps {
   value: number;
@@ -14,7 +18,11 @@ export interface CountUpProps {
 /**
  * Animates a number from 0 → value when it scrolls into view.
  * Falls back to the final value immediately for reduced-motion users.
- * The final value is always in the DOM after mount, so it stays readable.
+ *
+ * The initial state is the *final* value, so the server-rendered HTML — what
+ * crawlers and no-JS visitors get — carries the real number instead of "0".
+ * The countdown to zero happens in a layout effect, before the browser paints,
+ * so animating clients still see the count-up with no visible flash.
  */
 export function CountUp({
   value,
@@ -26,7 +34,12 @@ export function CountUp({
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   const reduceMotion = useReducedMotion();
-  const [display, setDisplay] = useState(0);
+  const [display, setDisplay] = useState(value);
+
+  useIsomorphicLayoutEffect(() => {
+    if (reduceMotion) return;
+    setDisplay(0);
+  }, [reduceMotion]);
 
   useEffect(() => {
     if (!inView) return;
