@@ -9,9 +9,9 @@ export interface HeroStat {
 }
 
 export const heroStats: HeroStat[] = [
-  { value: 250, suffix: "+" },
-  { value: 120, suffix: "+" },
-  { value: 10, suffix: "+" },
-  { value: 35, suffix: "+" },
+  { value: 100, suffix: "+" },
+  { value: 100, suffix: "+" },
+  { value: 5, suffix: "+" },
+  { value: 5, suffix: "+" },
 ];
 
