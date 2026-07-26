@@ -141,16 +141,6 @@ export const ru: Dictionary = {
     badge: "Наш стек",
     heading: "Технологии, на которых мы работаем",
     subheading: "Современный и надежный стек технологий, выбранный ради скорости и стабильности.",
-    groups: {
-      frontend: "Frontend разработка",
-      backend: "Backend и API решения",
-      mobile: "Мобильная разработка",
-      bot: "Telegram-боты",
-      desktop: "Desktop приложения",
-      devops: "DevOps и Облачные сервисы",
-      database: "Базы данных и Хранилища",
-      design: "Дизайн и Другие инструменты",
-    },
   },
 
   whyChoose: {

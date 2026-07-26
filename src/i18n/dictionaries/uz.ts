@@ -141,16 +141,6 @@ export const uz: Dictionary = {
     badge: "Bizning stek",
     heading: "Biz ishlaydigan texnologiyalar",
     subheading: "Unumdorlik va ishonchlilik uchun tanlangan zamonaviy vositalar to‘plami.",
-    groups: {
-      frontend: "Frontend dasturlash",
-      backend: "Backend va API xizmatlari",
-      mobile: "Mobil ilovalar yaratish",
-      bot: "Telegram botlar",
-      desktop: "Desktop (Kompyuter) dasturlari",
-      devops: "DevOps va Cloud (Bulutli) tizimlar",
-      database: "Ma'lumotlar bazasi",
-      design: "Dizayn va Boshqalar",
-    },
   },
 
   whyChoose: {

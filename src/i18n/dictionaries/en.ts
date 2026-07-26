@@ -146,16 +146,6 @@ export const en = {
     badge: "Our stack",
     heading: "Technologies we build with",
     subheading: "A modern, battle-tested toolkit chosen for performance and reliability.",
-    groups: {
-      frontend: "Frontend",
-      backend: "Backend & APIs",
-      mobile: "Mobile Development",
-      bot: "Telegram Bots",
-      desktop: "Desktop Apps",
-      devops: "DevOps & Cloud",
-      database: "Databases & Storage",
-      design: "Design & Tools",
-    },
   },
 
   whyChoose: {
