@@ -336,6 +336,14 @@ export const ru: Dictionary = {
       location: "Адрес",
     },
     form: {
+    contactMethod: "Как с вами связаться?",
+    methodEmail: "Email",
+    methodPhone: "Телефон",
+    methodTelegram: "Telegram",
+    contactEmail: "Email адрес",
+    contactPhone: "Номер телефона",
+    contactTelegram: "Telegram username",
+    contactTelegramPlaceholder: "@username",
       fullName: "Полное имя",
       phone: "Телефон",
       email: "Email",
@@ -369,6 +377,8 @@ export const ru: Dictionary = {
       body: "Спасибо за обращение — ответим в течение 24 часов.",
     },
     errors: {
+      telegramRequired: "Пожалуйста, укажите ваш Telegram username.",
+      telegramInvalid: "Это не похоже на Telegram username.",
       fullNameRequired: "Пожалуйста, введите полное имя.",
       fullNameShort: "Это имя выглядит слишком коротким.",
       phoneRequired: "Пожалуйста, введите номер телефона.",

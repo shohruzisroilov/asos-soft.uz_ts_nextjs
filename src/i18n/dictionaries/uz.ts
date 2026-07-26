@@ -335,6 +335,14 @@ export const uz: Dictionary = {
       location: "Manzil",
     },
     form: {
+    contactMethod: "Siz bilan qanday bog‘lanaylik?",
+    methodEmail: "Email",
+    methodPhone: "Telefon",
+    methodTelegram: "Telegram",
+    contactEmail: "Email manzil",
+    contactPhone: "Telefon raqam",
+    contactTelegram: "Telegram username",
+    contactTelegramPlaceholder: "@username",
       fullName: "To‘liq ism",
       phone: "Telefon",
       email: "Email",
@@ -368,6 +376,8 @@ export const uz: Dictionary = {
       body: "Murojaatingiz uchun rahmat — 24 soat ichida javob beramiz.",
     },
     errors: {
+      telegramRequired: "Iltimos, Telegram usernameingizni kiriting.",
+      telegramInvalid: "Bu Telegram usernamega o‘xshamaydi.",
       fullNameRequired: "Iltimos, to‘liq ismingizni kiriting.",
       fullNameShort: "Bu ism juda qisqa ko‘rinadi.",
       phoneRequired: "Iltimos, telefon raqamingizni kiriting.",

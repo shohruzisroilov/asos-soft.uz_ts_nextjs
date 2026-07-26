@@ -2,7 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, m } from "framer-motion";
-import { Mail, Phone, MapPin, Send, CheckCircle2, X } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  CheckCircle2,
+  X,
+  MessageCircle,
+  type LucideIcon,
+} from "lucide-react";
 import {
   Container,
   Badge,
@@ -19,18 +28,30 @@ import {
   emptyContactForm,
   validateContactForm,
   submitContactForm,
+  contactMethods,
   type ContactFormValues,
   type ContactErrors,
+  type ContactMethod,
 } from "@/lib/contact";
+import { cn } from "@/lib/utils";
 
 /** Visual top-to-bottom order of the form fields, used for error focus. */
 const FIELD_ORDER: (keyof ContactFormValues)[] = [
   "fullName",
-  "phone",
-  "email",
   "service",
+  "contactValue",
   "message",
 ];
+
+/** Icon + dictionary key for each reach-back option. */
+const methodMeta = {
+  email: { Icon: Mail, label: "methodEmail" },
+  phone: { Icon: Phone, label: "methodPhone" },
+  telegram: { Icon: MessageCircle, label: "methodTelegram" },
+} as const satisfies Record<
+  ContactMethod,
+  { Icon: LucideIcon; label: "methodEmail" | "methodPhone" | "methodTelegram" }
+>;
 
 function SuccessToast({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { t } = useI18n();
@@ -117,6 +138,44 @@ export function Contact() {
     setValues((prev) => ({ ...prev, [name]: value }));
     // Clear a field's error as soon as the user edits it
     setErrors((prev) => (prev[name] ? { ...prev, [name]: undefined } : prev));
+  };
+
+  /** Switching method clears the old value — an email in a phone field is
+      never what the visitor meant to keep. */
+  const setMethod = (contactMethod: ContactMethod) => {
+    setValues((prev) => ({ ...prev, contactMethod, contactValue: "" }));
+    setErrors((prev) => ({ ...prev, contactValue: undefined }));
+  };
+
+  /** Label, keyboard, and autofill hints for the currently selected method. */
+  const activeMethod = {
+    email: {
+      label: t.contact.form.contactEmail,
+      type: "email",
+      inputMode: "email",
+      autoComplete: "email",
+      placeholder: t.contact.form.emailPlaceholder,
+    },
+    phone: {
+      label: t.contact.form.contactPhone,
+      type: "tel",
+      inputMode: "tel",
+      autoComplete: "tel",
+      placeholder: t.contact.form.phonePlaceholder,
+    },
+    telegram: {
+      label: t.contact.form.contactTelegram,
+      type: "text",
+      inputMode: "text",
+      autoComplete: "username",
+      placeholder: t.contact.form.contactTelegramPlaceholder,
+    },
+  }[values.contactMethod] as {
+    label: string;
+    type: React.HTMLInputTypeAttribute;
+    inputMode: React.HTMLAttributes<HTMLInputElement>["inputMode"];
+    autoComplete: string;
+    placeholder: string;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -237,32 +296,6 @@ export function Contact() {
                   />
                 </Field>
 
-                <Field label={t.contact.form.phone} htmlFor="phone" required error={errors.phone}>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    autoComplete="tel"
-                    placeholder={t.contact.form.phonePlaceholder}
-                    value={values.phone}
-                    invalid={!!errors.phone}
-                    onChange={(e) => setField("phone", e.target.value)}
-                  />
-                </Field>
-
-                <Field label={t.contact.form.email} htmlFor="email" required error={errors.email}>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    placeholder={t.contact.form.emailPlaceholder}
-                    value={values.email}
-                    invalid={!!errors.email}
-                    onChange={(e) => setField("email", e.target.value)}
-                  />
-                </Field>
-
                 <Field label={t.contact.form.service} htmlFor="service" required error={errors.service}>
                   <Select
                     id="service"
@@ -280,6 +313,63 @@ export function Contact() {
                       </option>
                     ))}
                   </Select>
+                </Field>
+
+                {/* Reach-back method. Native radios so arrow keys and screen
+                    readers work without rebuilding the interaction. */}
+                <fieldset className="sm:col-span-2">
+                  <legend className="text-sm font-medium text-foreground select-none">
+                    {t.contact.form.contactMethod}
+                  </legend>
+                  <div className="mt-2 grid grid-cols-3 gap-2">
+                    {contactMethods.map((method) => {
+                      const { Icon, label } = methodMeta[method];
+                      return (
+                        <label
+                          key={method}
+                          className={cn(
+                            "flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-xl border px-3 text-sm font-medium",
+                            "transition-all duration-200 ease-[var(--ease-out-expo)]",
+                            "has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-offset-1 has-[:focus-visible]:ring-offset-background",
+                            values.contactMethod === method
+                              ? "border-foreground bg-accent text-accent-foreground shadow-xs"
+                              : "border-border bg-surface text-foreground-muted hover:border-foreground/20 hover:text-foreground"
+                          )}
+                        >
+                          <input
+                            type="radio"
+                            name="contactMethod"
+                            value={method}
+                            checked={values.contactMethod === method}
+                            onChange={() => setMethod(method)}
+                            className="sr-only"
+                          />
+                          <Icon className="size-4 shrink-0" aria-hidden />
+                          <span>{t.contact.form[label]}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </fieldset>
+
+                <Field
+                  label={activeMethod.label}
+                  htmlFor="contactValue"
+                  required
+                  error={errors.contactValue}
+                  className="sm:col-span-2"
+                >
+                  <Input
+                    id="contactValue"
+                    name="contactValue"
+                    type={activeMethod.type}
+                    inputMode={activeMethod.inputMode}
+                    autoComplete={activeMethod.autoComplete}
+                    placeholder={activeMethod.placeholder}
+                    value={values.contactValue}
+                    invalid={!!errors.contactValue}
+                    onChange={(e) => setField("contactValue", e.target.value)}
+                  />
                 </Field>
 
                 <Field

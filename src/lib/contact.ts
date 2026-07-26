@@ -1,9 +1,14 @@
 import type { Dictionary } from "@/i18n";
 
+/** How the visitor wants us to reach them back, in the order shown. */
+export const contactMethods = ["phone", "telegram", "email"] as const;
+export type ContactMethod = (typeof contactMethods)[number];
+
 export interface ContactFormValues {
   fullName: string;
-  phone: string;
-  email: string;
+  contactMethod: ContactMethod;
+  /** Interpreted according to `contactMethod` — an address, number, or handle. */
+  contactValue: string;
   service: string;
   message: string;
 }
@@ -15,14 +20,38 @@ export type ContactErrorMessages = Dictionary["contact"]["errors"];
 
 export const emptyContactForm: ContactFormValues = {
   fullName: "",
-  phone: "",
-  email: "",
+  contactMethod: "phone",
+  contactValue: "",
   service: "",
   message: "",
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /^[+]?[\d\s()-]{7,}$/;
+/** Telegram handles: 5–32 chars, letters/digits/underscore, optional @. */
+const TELEGRAM_RE = /^@?[a-zA-Z0-9_]{5,32}$/;
+
+export function isContactMethod(value: unknown): value is ContactMethod {
+  return contactMethods.includes(value as ContactMethod);
+}
+
+/** Validates `contactValue` against whichever method the visitor picked. */
+function validateContactValue(
+  method: ContactMethod,
+  value: string,
+  messages: ContactErrorMessages
+): string | undefined {
+  if (!value) {
+    if (method === "email") return messages.emailRequired;
+    if (method === "phone") return messages.phoneRequired;
+    return messages.telegramRequired;
+  }
+  if (method === "email" && !EMAIL_RE.test(value)) return messages.emailInvalid;
+  if (method === "phone" && !PHONE_RE.test(value)) return messages.phoneInvalid;
+  if (method === "telegram" && !TELEGRAM_RE.test(value))
+    return messages.telegramInvalid;
+  return undefined;
+}
 
 /** Client-side validation. Returns a map of field → localized error message. */
 export function validateContactForm(
@@ -34,11 +63,12 @@ export function validateContactForm(
   if (!v.fullName.trim()) e.fullName = messages.fullNameRequired;
   else if (v.fullName.trim().length < 2) e.fullName = messages.fullNameShort;
 
-  if (!v.phone.trim()) e.phone = messages.phoneRequired;
-  else if (!PHONE_RE.test(v.phone.trim())) e.phone = messages.phoneInvalid;
-
-  if (!v.email.trim()) e.email = messages.emailRequired;
-  else if (!EMAIL_RE.test(v.email.trim())) e.email = messages.emailInvalid;
+  const contactError = validateContactValue(
+    v.contactMethod,
+    v.contactValue.trim(),
+    messages
+  );
+  if (contactError) e.contactValue = contactError;
 
   if (!v.service) e.service = messages.serviceRequired;
 

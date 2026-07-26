@@ -341,6 +341,14 @@ export const en = {
       location: "Location",
     },
     form: {
+    contactMethod: "How should we reach you?",
+    methodEmail: "Email",
+    methodPhone: "Phone",
+    methodTelegram: "Telegram",
+    contactEmail: "Email address",
+    contactPhone: "Phone number",
+    contactTelegram: "Telegram username",
+    contactTelegramPlaceholder: "@username",
       fullName: "Full name",
       phone: "Phone",
       email: "Email",
@@ -374,6 +382,8 @@ export const en = {
       body: "Thanks for reaching out — we’ll reply within 24 hours.",
     },
     errors: {
+      telegramRequired: "Please enter your Telegram username.",
+      telegramInvalid: "That does not look like a Telegram username.",
       fullNameRequired: "Please enter your full name.",
       fullNameShort: "That name looks too short.",
       phoneRequired: "Please enter your phone number.",
