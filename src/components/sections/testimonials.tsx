@@ -38,9 +38,11 @@ function Rating({ rating }: { rating: number }) {
 function TestimonialCard({
   item,
   review,
+  role,
 }: {
   item: TestimonialMeta;
   review: string;
+  role?: string;
 }) {
   return (
     <figure className="relative mx-auto flex min-h-[19rem] max-w-2xl flex-col rounded-3xl border border-border bg-surface p-8 shadow-sm sm:min-h-[16rem] sm:p-10">
@@ -60,6 +62,11 @@ function TestimonialCard({
           <div className="font-semibold tracking-tight text-foreground">
             {item.name}
           </div>
+          {(item.company || role) && (
+            <div className="text-sm text-foreground-muted">
+              {item.company || role}
+            </div>
+          )}
         </div>
       </figcaption>
     </figure>
@@ -88,10 +95,10 @@ export function Testimonials() {
     setState(([current]) => [target, target > current ? 1 : -1]);
 
   useEffect(() => {
-    if (paused) return;
+    if (paused || count <= 1) return;
     const id = setInterval(() => paginate(1), AUTOPLAY_MS);
     return () => clearInterval(id);
-  }, [paginate, paused, index]);
+  }, [paginate, paused, index, count]);
 
   const current = testimonials[index];
 
@@ -146,51 +153,54 @@ export function Testimonials() {
                 >
                   <TestimonialCard
                     item={current}
-                    review={t.testimonials.items[index].review}
+                    review={t.testimonials.items[index]?.review || ""}
+                    role={t.testimonials.items[index]?.role}
                   />
                 </m.div>
               </AnimatePresence>
             </div>
 
             {/* Controls */}
-            <div className="mt-8 flex items-center justify-center gap-5">
-              <button
-                type="button"
-                onClick={() => paginate(-1)}
-                aria-label={t.testimonials.prev}
-                className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-surface text-foreground shadow-xs transition-all duration-200 ease-[var(--ease-out-expo)] hover:-translate-y-0.5 hover:border-foreground/25 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              >
-                <ChevronLeft className="size-5" />
-              </button>
+            {count > 1 && (
+              <div className="mt-8 flex items-center justify-center gap-5">
+                <button
+                  type="button"
+                  onClick={() => paginate(-1)}
+                  aria-label={t.testimonials.prev}
+                  className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-surface text-foreground shadow-xs transition-all duration-200 ease-[var(--ease-out-expo)] hover:-translate-y-0.5 hover:border-foreground/25 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                >
+                  <ChevronLeft className="size-5" />
+                </button>
 
-              {/* Dots */}
-              <div className="flex items-center gap-2">
-                {testimonials.map((item, i) => (
-                  <button
-                    key={item.name}
-                    type="button"
-                    onClick={() => goTo(i)}
-                    aria-label={`Go to testimonial ${i + 1}`}
-                    aria-current={i === index}
-                    className={cn(
-                      "h-2 rounded-full transition-all duration-300 ease-[var(--ease-out-expo)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                      i === index
-                        ? "w-6 bg-foreground"
-                        : "w-2 bg-foreground/25 hover:bg-foreground/50"
-                    )}
-                  />
-                ))}
+                {/* Dots */}
+                <div className="flex items-center gap-2">
+                  {testimonials.map((item, i) => (
+                    <button
+                      key={item.name}
+                      type="button"
+                      onClick={() => goTo(i)}
+                      aria-label={`Go to testimonial ${i + 1}`}
+                      aria-current={i === index}
+                      className={cn(
+                        "h-2 rounded-full transition-all duration-300 ease-[var(--ease-out-expo)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                        i === index
+                          ? "w-6 bg-foreground"
+                          : "w-2 bg-foreground/25 hover:bg-foreground/50"
+                      )}
+                    />
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => paginate(1)}
+                  aria-label={t.testimonials.next}
+                  className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-surface text-foreground shadow-xs transition-all duration-200 ease-[var(--ease-out-expo)] hover:-translate-y-0.5 hover:border-foreground/25 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                >
+                  <ChevronRight className="size-5" />
+                </button>
               </div>
-
-              <button
-                type="button"
-                onClick={() => paginate(1)}
-                aria-label={t.testimonials.next}
-                className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-surface text-foreground shadow-xs transition-all duration-200 ease-[var(--ease-out-expo)] hover:-translate-y-0.5 hover:border-foreground/25 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              >
-                <ChevronRight className="size-5" />
-              </button>
-            </div>
+            )}
           </div>
         </Reveal>
       </Container>

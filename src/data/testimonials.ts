@@ -12,10 +12,5 @@ export interface TestimonialMeta {
 }
 
 export const testimonials: TestimonialMeta[] = [
-  { name: "Otabek Madaminov", company: "", rating: 5 },
-  { name: "Dilnoza Solihova", company: "", rating: 5 },
-  { name: "Sardor Rahmonov", company: "", rating: 5 },
-  { name: "Nodira To‘rayeva", company: "", rating: 5 },
-  { name: "Jasur Tursunov", company: "", rating: 5 },
-  { name: "Lola Karimova", company: "", rating: 5 },
+  { name: "Abror Musayev", company: "Surxondaryo viloyati", rating: 5 },
 ];

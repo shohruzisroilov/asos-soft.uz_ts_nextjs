@@ -293,34 +293,9 @@ export const uz: Dictionary = {
     subheading: "Mijozlarimiz hamkorligimiz haqida qanday fikrda ekanliklarini bilib oling.",
     items: [
       {
-        role: "CTO",
+        role: "Mijoz (Surxondaryo)",
         review:
-          "Saytni kutganimizdan ancha tez va chiroyli qilib topshirishdi. Yuklanish tezligi oshgani sabab mijozlarimiz ham sezilarli ko'paydi. Mas'uliyatli jamoa.",
-      },
-      {
-        role: "Asoschi",
-        review:
-          "Mobil ilovani aytilgan muddatdan oldinroq topshirishdi. Dizayni ham, ishlash tezligi ham a'lo darajada. Katta rahmat!",
-      },
-      {
-        role: "Mahsulot rahbari",
-        review:
-          "Barcha eski tizimlarimizni bitta qulay va yaxlit platformaga birlashtirib berishdi. Ishimiz ancha osonlashdi va vaqtimiz tejalmoqda.",
-      },
-      {
-        role: "Bosh direktor",
-        review:
-          "Yuklarni kuzatish paneli boshqaruvni ancha osonlashtirdi. Shohruz va uning jamoasiga tezkor yordam uchun rahmat. Hamkorlikdan xursandmiz.",
-      },
-      {
-        role: "Marketing rahbari",
-        review:
-          "Sayt dizayni juda zamonaviy va chiroyli chiqdi. Google tizimida ham oson topiladigan bo'ldi. Natijalardan juda mamnunmiz.",
-      },
-      {
-        role: "COO",
-        review:
-          "Biznesimizni o'rganib, juda foydali maslahatlar berishdi. Biz uchun yaratilgan CRM tizim tufayli savdolarimiz tizimli va tartibli ketyapti.",
+          "Meni Abror Musayev SURXONDARYO viloyatidanman. Asossoft kompaniyasi bilan ishlab ajoyib natijalarga erishmoqdaman. Asossoft kompaniyasiga MAHALLA UCHUN DOSTAVKA boti buyurtma bergandim. Ochig'ini aytsam bu darajada professional bo'ladi deb o'ylamagandim. Menga bu kompaniyani eng yoqqan tarafi Asossoft o'z mijozlari uchun maksimal qayg'urishi. Barcha IT kompaniyalari ham bunday g'amxo'rlik qilish o'z mijozlari uchun qayg'urmasa kerak. Shaxsan men Asossoft va mehnatsevar xodimlaridan minnatdorman.",
       },
     ],
   },

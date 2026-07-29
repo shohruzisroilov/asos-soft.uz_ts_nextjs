@@ -299,34 +299,9 @@ export const en = {
     subheading: "Don’t just take our word for it — here’s what our clients say.",
     items: [
       {
-        role: "CTO",
+        role: "Client (Surkhandarya)",
         review:
-          "They built the website faster and more beautifully than we expected. Thanks to fast load speeds, conversions increased. Very responsible team.",
-      },
-      {
-        role: "Founder",
-        review:
-          "They shipped our mobile app ahead of schedule without cutting any corners. The design and performance is outstanding. Thanks a lot!",
-      },
-      {
-        role: "Product Lead",
-        review:
-          "They unified our complex old management tools into one unified clean platform. Our work is much simpler now and time is saved.",
-      },
-      {
-        role: "CEO",
-        review:
-          "The live fleet tracking dashboard transformed our operations. Big thanks to Shohruz and his team for fast help. Happy with the partnership.",
-      },
-      {
-        role: "Head of Marketing",
-        review:
-          "The website design is extremely modern and beautiful. We now easily rank higher on Google search results. Extremely satisfied!",
-      },
-      {
-        role: "COO",
-        review:
-          "They studied our business and gave very helpful product consulting. The CRM they created made our sales processes structured and clear.",
+          "I am Abror Musayev from Surkhandarya region. Working with Asossoft, I am achieving great results. I ordered the MAHALLA UCHUN DOSTAVKA bot from Asossoft. Honestly, I didn't expect it to be this professional. What I like most about this company is how much Asossoft maximumly cares for its clients. Not all IT companies show such care and attention to their clients. Personally, I am very grateful to Asossoft and its hardworking team.",
       },
     ],
   },
